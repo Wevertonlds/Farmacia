@@ -1117,6 +1117,99 @@
             }
         };
 
+        // CADASTRO DE USUÁRIO
+document.getElementById('userForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const username = document.getElementById('newUsername').value.trim();
+    if (users.some(u => u.username === username && u.role !== 'ceo')) {
+        alert('Usuário já existe.');
+        return;
+    }
+    const selectedStores = Array.from(document.getElementById('newStore').selectedOptions).map(o => o.value);
+    const user = {
+        username,
+        password: document.getElementById('newPassword').value,
+        role: document.getElementById('newRole').value,
+        stores: document.getElementById('newRole').value === 'gerente' ? selectedStores : []
+    };
+    users.push(user);
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Usuário cadastrado com sucesso!');
+    bootstrap.Modal.getInstance(document.getElementById('userModal')).hide();
+    e.target.reset();
+    document.getElementById('storeDiv').style.display = 'none';
+    renderUserList();
+});
+
+document.getElementById('newRole').addEventListener('change', () => {
+    document.getElementById('storeDiv').style.display =
+        document.getElementById('newRole').value === 'gerente' ? 'block' : 'none';
+});
+
+function renderUserList() {
+    const tbody = document.getElementById('userListBody');
+    tbody.innerHTML = '';
+    users.forEach((user, idx) => {
+        if (user.role === 'ceo') return;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${user.username}</td>
+            <td>${user.role}</td>
+            <td>${user.stores ? user.stores.join(', ') : '-'}</td>
+            <td>
+                <button class="btn btn-warning btn-sm" onclick="editarUsuario(${idx})" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="excluirUsuario(${idx})" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+window.editarUsuario = function(idx) {
+    const user = users[idx];
+    document.getElementById('newUsername').value = user.username;
+    document.getElementById('newPassword').value = '';
+    document.getElementById('newRole').value = user.role;
+    document.getElementById('storeDiv').style.display = user.role === 'gerente' ? 'block' : 'none';
+    if (user.role === 'gerente') {
+        const select = document.getElementById('newStore');
+        Array.from(select.options).forEach(opt => opt.selected = user.stores.includes(opt.value));
+    }
+    const form = document.getElementById('userForm');
+    const oldSubmit = form.onsubmit;
+    form.onsubmit = e => {
+        e.preventDefault();
+        users[idx] = {
+            username: document.getElementById('newUsername').value,
+            password: document.getElementById('newPassword').value || user.password,
+            role: document.getElementById('newRole').value,
+            stores: document.getElementById('newRole').value === 'gerente'
+                ? Array.from(document.getElementById('newStore').selectedOptions).map(o => o.value)
+                : []
+        };
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Usuário atualizado!');
+        bootstrap.Modal.getInstance(document.getElementById('userModal')).hide();
+        form.onsubmit = oldSubmit;
+        renderUserList();
+    };
+    new bootstrap.Modal(document.getElementById('userModal')).show();
+};
+
+window.excluirUsuario = function(idx) {
+    if (confirm('Excluir usuário?')) {
+        users.splice(idx, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        renderUserList();
+    }
+};
+
+document.getElementById('userListModal').addEventListener('shown.bs.modal', renderUserList);
+
         // === INICIALIZAÇÃO FINAL ===
         window.addEventListener('resize', checkScreenSize);
         window.addEventListener('load', () => {
@@ -1128,3 +1221,4 @@
     </script>
 </body>
 </html>
+
