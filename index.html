@@ -10,139 +10,138 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
-        body { 
-            background-color: #f8f9fa; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             font-size: 14px;
         }
-        #loginScreen { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.95); 
-            z-index: 9999; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+        #loginScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 15px;
         }
-        #loginBox { 
-            background: white; 
-            padding: 2rem; 
-            border-radius: 15px; 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5); 
-            width: 100%; 
-            max-width: 450px; 
+        #loginBox {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 450px;
         }
         #app { display: none; }
-        .sidebar { 
-            min-height: 100vh; 
-            background-color: #ffffff; 
-            padding: 15px; 
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1); 
+        .sidebar {
+            min-height: 100vh;
+            background-color: #ffffff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
             position: fixed;
             z-index: 100;
             overflow-y: auto;
         }
-        .sidebar .nav-link { 
-            color: #0d6efd; 
-            padding: 10px; 
-            display: flex; 
-            align-items: center; 
-            font-size: 0.9rem; 
+        .sidebar .nav-link {
+            color: #0d6efd;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
             border-radius: 5px;
             margin-bottom: 5px;
         }
-        .sidebar .nav-link.active { 
-            background-color: #0d6efd; 
-            color: white !important; 
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: white !important;
         }
-        .sidebar .nav-link i { 
-            margin-right: 8px; 
+        .sidebar .nav-link i {
+            margin-right: 8px;
             font-size: 1rem;
         }
-        .table th { 
-            background-color: #0d6efd; 
-            color: white; 
-            font-size: 0.8rem; 
+        .table th {
+            background-color: #0d6efd;
+            color: white;
+            font-size: 0.8rem;
             padding: 0.5rem;
         }
-        .table td { 
-            font-size: 0.85rem; 
-            padding: 0.5rem; 
-            vertical-align: middle; 
+        .table td {
+            font-size: 0.85rem;
+            padding: 0.5rem;
+            vertical-align: middle;
         }
         .below-meta { background-color: #f8d7da !important; color: #721c24; }
         .above-meta { background-color: #d1e7dd !important; color: #155724; }
-        .card { 
-            border-radius: 10px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             margin-bottom: 15px;
         }
-        .chart-container { 
-            width: 100%; 
-            margin: 15px auto; 
-            height: 300px; 
+        .chart-container {
+            width: 100%;
+            margin: 15px auto;
+            height: 300px;
             position: relative;
         }
-        .btn-custom { 
-            background-color: #0d6efd; 
-            color: white; 
+        .btn-custom {
+            background-color: #0d6efd;
+            color: white;
             font-size: 0.9rem;
         }
         .btn-custom:hover { background-color: #0a58ca; }
-        .action-btns .btn { 
-            width: 32px; 
-            height: 32px; 
-            padding: 0; 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 0.9rem; 
+        .action-btns .btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
             margin: 0 2px;
         }
-        .form-row { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 0.5rem; 
-            align-items: end; 
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: end;
         }
-        .form-row > div { 
-            flex: 1 1 120px; 
+        .form-row > div {
+            flex: 1 1 120px;
             min-width: 0;
         }
         .form-row .col-clientes { flex: 0 0 90px; }
-        .table-responsive { 
-            overflow-x: auto; 
+        .table-responsive {
+            overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-        .table td, .table th { 
-            white-space: nowrap; 
+        .table td, .table th {
+            white-space: nowrap;
         }
         .hidden { display: none; }
         .meta-ok { background-color: #d4edda !important; color: #155724; }
         .meta-no { background-color: #f8d7da !important; color: #721c24; }
-        
-        /* Responsividade melhorada */
+       
         @media (max-width: 768px) {
-            .sidebar { 
-                position: fixed; 
-                top: 0; 
-                left: -280px; 
-                width: 280px; 
-                transition: 0.3s; 
-                z-index: 1000; 
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                transition: 0.3s;
+                z-index: 1000;
             }
             .sidebar.active { left: 0; }
-            .content { 
-                margin-left: 0; 
+            .content {
+                margin-left: 0;
                 width: 100%;
             }
-            .form-row { 
-                flex-direction: column; 
+            .form-row {
+                flex-direction: column;
             }
             .form-row > div {
                 flex: 1 1 100%;
@@ -171,7 +170,7 @@
                 padding: 10px;
             }
         }
-        
+       
         @media (max-width: 576px) {
             body {
                 font-size: 13px;
@@ -200,20 +199,20 @@
                 padding: 0.4rem 0.8rem;
             }
         }
-        
-        .toggle-btn { 
-            display: none; 
-            background-color: #0d6efd; 
-            color: white; 
-            border: none; 
-            padding: 10px; 
-            border-radius: 5px; 
+       
+        .toggle-btn {
+            display: none;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
             position: fixed;
             top: 10px;
             left: 10px;
             z-index: 101;
         }
-        
+       
         .overlay {
             display: none;
             position: fixed;
@@ -224,12 +223,11 @@
             background: rgba(0,0,0,0.5);
             z-index: 99;
         }
-        
+       
         .overlay.active {
             display: block;
         }
-        
-        /* Ajustes para telas muito pequenas */
+       
         @media (max-width: 360px) {
             .container-fluid {
                 padding-left: 5px;
@@ -239,19 +237,16 @@
                 font-size: 0.7rem;
             }
         }
-        
-        /* Melhorias para formulários em mobile */
+       
         .form-control, .form-select {
             font-size: 0.9rem;
         }
-        
+       
         @media (max-width: 768px) {
             .form-control, .form-select {
-                font-size: 16px; /* Previne zoom no iOS */
+                font-size: 16px;
             }
         }
-
-        /* Botão de relatório */
         .btn-relatorio {
             background-color: #28a745;
             color: white;
@@ -262,7 +257,6 @@
     </style>
 </head>
 <body>
-
     <!-- TELA DE LOGIN -->
     <div id="loginScreen">
         <div id="loginBox">
@@ -292,7 +286,7 @@
                 <i class="bi bi-filter-left"></i>
             </button>
             <div class="overlay" onclick="toggleSidebar()"></div>
-            
+           
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
                 <h5 class="text-center mb-4">Filtros</h5>
                 <div class="list-group">
@@ -309,7 +303,6 @@
                         <input type="date" class="form-control mb-3" id="filtroData">
                     </div>
                     <button class="btn btn-custom w-100" onclick="aplicarFiltro()">Aplicar Filtro</button>
-
                     <!-- ADMINISTRAÇÃO -->
                     <div id="adminMenu" class="mt-4" style="display:none;">
                         <label class="list-group-item">Administração</label>
@@ -469,14 +462,13 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <button class="btn btn-relatorio me-2" onclick="gerarRelatorio()">
-                                <i class="bi bi-search"></i> Gerar Relatório
+                                Gerar Relatório
                             </button>
                             <button class="btn btn-success" onclick="exportarParaExcel()" id="btnExportarExcel" disabled>
-                                <i class="bi bi-file-earmark-excel"></i> Exportar para Excel
+                                Exportar para Excel
                             </button>
                         </div>
                     </div>
-                    
                     <div class="table-responsive">
                         <table class="table table-striped table-sm">
                             <thead class="table-primary">
@@ -512,13 +504,12 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-between mb-3">
                         <button type="button" class="btn btn-outline-primary" onclick="carregarMetasExistentes()">
-                            <i class="bi bi-search"></i> Buscar Metas Existentes
+                            Buscar Metas Existentes
                         </button>
                         <button type="button" class="btn btn-outline-info" onclick="limparFormularioMetas()">
-                            <i class="bi bi-plus-circle"></i> Nova Meta
+                            Nova Meta
                         </button>
                     </div>
-                    
                     <form id="metasForm" class="row g-3">
                         <input type="hidden" id="metaId">
                         <div class="col-md-6">
@@ -556,7 +547,7 @@
                         <div class="col-12">
                             <button type="button" class="btn btn-custom" onclick="gravarMetas()">Gravar Metas</button>
                             <button type="button" class="btn btn-warning" onclick="editarMetaExistente()" id="btnEditarMeta" style="display:none;">
-                                <i class="bi bi-pencil"></i> Editar Meta
+                                Editar Meta
                             </button>
                         </div>
                     </form>
@@ -735,17 +726,12 @@
             const dataDiv = document.getElementById('filtroDataDiv');
             if (periodo === 'dia' || periodo === 'mes') {
                 dataDiv.style.display = 'block';
-                if (periodo === 'mes') {
-                    document.getElementById('filtroData').type = 'month';
-                } else {
-                    document.getElementById('filtroData').type = 'date';
-                }
+                document.getElementById('filtroData').type = periodo === 'mes' ? 'month' : 'date';
             } else {
                 dataDiv.style.display = 'none';
             }
         }
 
-        // FUNÇÃO PARA TOGGLE DA SIDEBAR
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.overlay');
@@ -753,10 +739,8 @@
             overlay.classList.toggle('active');
         }
 
-        // ATUALIZAR DATA ATUAL
         document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR');
 
-        // MOSTRAR/OCULTAR BOTÃO TOGGLE
         function checkScreenSize() {
             const toggleBtn = document.querySelector('.toggle-btn');
             if (window.innerWidth < 768) {
@@ -768,22 +752,22 @@
             }
         }
 
-        // FUNÇÃO DE LOGIN
+        // LOGIN CORRIGIDO
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
-            
+
             const user = users.find(u => u.username === username && u.password === password);
             if (user) {
                 currentUser = { ...user };
                 if (user.role === 'gerente') currentUser.stores = user.stores || [];
-                
-                // Entrar no sistema
+
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
+
                 document.getElementById('userInfo').innerHTML = `
-                    Logado: ${currentUser.username} (${currentUser.role}) 
+                    Logado: ${currentUser.username} (${currentUser.role})
                     <button class="btn btn-sm btn-danger ms-2" onclick="logout()">Sair</button>
                 `;
 
@@ -799,11 +783,13 @@
                 configurarLojasUsuario();
                 aplicarMetasNaTabela();
                 aplicarFiltro();
-                
-                // Fechar sidebar em mobile após login
+
                 if (window.innerWidth < 768) {
-                    toggleSidebar();
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.querySelector('.overlay').classList.remove('active');
                 }
+
+                document.getElementById('loginForm').reset();
             } else {
                 alert('Usuário ou senha inválidos.');
             }
@@ -821,6 +807,7 @@
         }
 
         function configurarLojasUsuario() {
+            if (!currentUser) return;
             const lojasContainer = document.getElementById('lojasFiltros');
             lojasContainer.innerHTML = '';
             const lojasDisponiveis = currentUser.role === 'gerente' ? currentUser.stores || [] : todasLojas;
@@ -839,7 +826,9 @@
 
             ['addLoja', 'editLoja'].forEach(id => {
                 const select = document.getElementById(id);
-                select.innerHTML = lojasDisponiveis.map(l => `<option value="${l}">${l}</option>`).join('');
+                if (select) {
+                    select.innerHTML = lojasDisponiveis.map(l => `<option value="${l}">${l}</option>`).join('');
+                }
             });
         }
 
@@ -868,22 +857,18 @@
             localStorage.setItem('dados', JSON.stringify(dados));
         }
 
-        // FILTRO
         function aplicarFiltro() {
+            if (!currentUser) return;
             const periodo = document.getElementById('filtroPeriodo').value;
             const dataFiltro = document.getElementById('filtroData').value;
             const lojasAtivas = Array.from(document.querySelectorAll('#lojasFiltros .nav-link.active')).map(l => l.dataset.loja);
 
             let filtrados = dados.filter(row => {
-                // Filtro de loja
                 if (currentUser.role === 'gerente' && !currentUser.stores.includes(row.loja)) return false;
                 if (currentUser.role === 'analista' && row.addedBy !== currentUser.username) return false;
                 if (lojasAtivas.length > 0 && !lojasAtivas.includes(row.loja)) return false;
-
-                // Filtro de período
                 if (periodo === 'dia' && dataFiltro && row.data !== dataFiltro) return false;
                 if (periodo === 'mes' && dataFiltro && row.data.slice(0, 7) !== dataFiltro.slice(0, 7)) return false;
-
                 return true;
             });
 
@@ -944,69 +929,47 @@
             });
         }
 
-        // FUNÇÃO PARA ABRIR RELATÓRIO DE VENDAS
         function abrirRelatorioVendas() {
-            // Configurar datas padrão (últimos 30 dias)
             const dataFim = new Date();
             const dataInicio = new Date();
             dataInicio.setDate(dataInicio.getDate() - 30);
-            
             document.getElementById('relatorioDataInicio').value = dataInicio.toISOString().split('T')[0];
             document.getElementById('relatorioDataFim').value = dataFim.toISOString().split('T')[0];
-            
             new bootstrap.Modal(document.getElementById('relatorioVendasModal')).show();
         }
 
-        // FUNÇÃO PARA GERAR RELATÓRIO
         function gerarRelatorio() {
             const dataInicio = document.getElementById('relatorioDataInicio').value;
             const dataFim = document.getElementById('relatorioDataFim').value;
             const lojaSelecionada = document.getElementById('relatorioLoja').value;
-
             if (!dataInicio || !dataFim) {
                 alert('Por favor, selecione as datas de início e fim.');
                 return;
             }
-
-            // Filtrar dados
             dadosRelatorio = dados.filter(venda => {
                 const dataVenda = new Date(venda.data);
                 const inicio = new Date(dataInicio);
                 const fim = new Date(dataFim);
-                fim.setDate(fim.getDate() + 1); // Incluir o dia final
-
-                // Filtro de data
+                fim.setDate(fim.getDate() + 1);
                 if (dataVenda < inicio || dataVenda >= fim) return false;
-
-                // Filtro de loja
                 if (lojaSelecionada !== 'TODAS' && venda.loja !== lojaSelecionada) return false;
-
                 return true;
             });
-
-            // Ordenar por data mais recente primeiro
             dadosRelatorio.sort((a, b) => new Date(b.data) - new Date(a.data));
-
             renderRelatorioVendas();
-            
-            // Habilitar botão de exportação
             document.getElementById('btnExportarExcel').disabled = false;
         }
 
-        // FUNÇÃO PARA RENDERIZAR RELATÓRIO NA TABELA
         function renderRelatorioVendas() {
             const tbody = document.getElementById('relatorioVendasBody');
             tbody.innerHTML = '';
-
             if (dadosRelatorio.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" class="text-center">Nenhum dado encontrado para o período selecionado.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" class="text-center">Nenhum dado encontrado.</td></tr>';
                 return;
             }
-
             dadosRelatorio.forEach(venda => {
-                const tr = document.createElement('tr');
                 const ticketMedio = venda.clientes > 0 ? venda.realizadoBruta / venda.clientes : 0;
-
+                const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${venda.id}</td>
                     <td>${venda.loja}</td>
@@ -1023,71 +986,44 @@
             });
         }
 
-        // FUNÇÃO PARA EXPORTAR PARA EXCEL
         function exportarParaExcel() {
             if (dadosRelatorio.length === 0) {
-                alert('Não há dados para exportar. Gere um relatório primeiro.');
+                alert('Gere um relatório primeiro.');
                 return;
             }
-
-            try {
-                // Preparar dados para Excel
-                const dadosExcel = dadosRelatorio.map(venda => {
-                    const ticketMedio = venda.clientes > 0 ? venda.realizadoBruta / venda.clientes : 0;
-
-                    return {
-                        'ID': venda.id,
-                        'Loja': venda.loja,
-                        'Data Venda': venda.data,
-                        'Dia Semana': venda.diaSemana,
-                        'Realizado Bruta (R$)': venda.realizadoBruta,
-                        'Realizado Líquida (R$)': venda.realizadoLiquida,
-                        'Clientes': venda.clientes,
-                        'Ticket Médio (R$)': ticketMedio,
-                        'Usuário': venda.addedBy || 'N/A',
-                        'Data/Hora Lançamento': venda.dataHoraLancamento || 'N/A'
-                    };
-                });
-
-                // Criar workbook
-                const wb = XLSX.utils.book_new();
-                const ws = XLSX.utils.json_to_sheet(dadosExcel);
-
-                // Adicionar worksheet ao workbook
-                XLSX.utils.book_append_sheet(wb, ws, "Relatório de Vendas");
-
-                // Gerar nome do arquivo com data
-                const dataAtual = new Date().toISOString().slice(0, 10);
-                const nomeArquivo = `relatorio_vendas_${dataAtual}.xlsx`;
-
-                // Salvar arquivo
-                XLSX.writeFile(wb, nomeArquivo);
-
-                alert('Relatório exportado com sucesso!');
-
-            } catch (error) {
-                console.error('Erro ao exportar para Excel:', error);
-                alert('Erro ao exportar para Excel. Verifique o console para mais detalhes.');
-            }
+            const dadosExcel = dadosRelatorio.map(venda => {
+                const ticketMedio = venda.clientes > 0 ? venda.realizadoBruta / venda.clientes : 0;
+                return {
+                    'ID': venda.id,
+                    'Loja': venda.loja,
+                    'Data Venda': venda.data,
+                    'Dia Semana': venda.diaSemana,
+                    'Realizado Bruta (R$)': venda.realizadoBruta,
+                    'Realizado Líquida (R$)': venda.realizadoLiquida,
+                    'Clientes': venda.clientes,
+                    'Ticket Médio (R$)': ticketMedio,
+                    'Usuário': venda.addedBy || 'N/A',
+                    'Data/Hora Lançamento': venda.dataHoraLancamento || 'N/A'
+                };
+            });
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(dadosExcel);
+            XLSX.utils.book_append_sheet(wb, ws, "Relatório de Vendas");
+            const nomeArquivo = `relatorio_vendas_${new Date().toISOString().slice(0, 10)}.xlsx`;
+            XLSX.writeFile(wb, nomeArquivo);
+            alert('Relatório exportado com sucesso!');
         }
 
-        // FUNÇÃO PARA ABRIR HISTÓRICO DE METAS
         function abrirHistoricoMetas() {
             renderHistoricoMetas();
             new bootstrap.Modal(document.getElementById('historicoMetasModal')).show();
         }
 
-        // FUNÇÃO PARA RENDERIZAR HISTÓRICO DE METAS
         function renderHistoricoMetas() {
             const tbody = document.getElementById('historicoMetasBody');
             tbody.innerHTML = '';
-            
-            // Ordenar histórico por data mais recente primeiro
-            const historicoOrdenado = [...historicoMetas].sort((a, b) => 
-                new Date(b.dataHora) - new Date(a.dataHora)
-            );
-            
-            historicoOrdenado.forEach(meta => {
+            const ordenado = [...historicoMetas].sort((a, b) => new Date(b.dataHora) - new Date(a.dataHora));
+            ordenado.forEach(meta => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${new Date(meta.dataHora).toLocaleString('pt-BR')}</td>
@@ -1099,17 +1035,12 @@
                     <td>R$ ${meta.metaDiretor.toFixed(2)}</td>
                     <td>R$ ${meta.metaAnalista.toFixed(2)}</td>
                     <td>${meta.usuario}</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" onclick="carregarMetaParaEdicao('${meta.mes}', '${meta.loja}')" title="Editar">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                    </td>
+                    <td><button class="btn btn-warning btn-sm" onclick="carregarMetaParaEdicao('${meta.mes}', '${meta.loja}')">Editar</button></td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        // FUNÇÃO PARA CARREGAR META PARA EDIÇÃO
         function carregarMetaParaEdicao(mes, loja) {
             const meta = metasMes.find(m => m.mes === mes && m.loja === loja);
             if (meta) {
@@ -1121,49 +1052,32 @@
                 document.getElementById('metaGerente').value = meta.metaGerente || '';
                 document.getElementById('metaDiretor').value = meta.metaDiretor || '';
                 document.getElementById('metaAnalista').value = meta.metaAnalista || '';
-                
-                // Mostrar botão de editar
                 document.getElementById('btnEditarMeta').style.display = 'inline-block';
-                
-                // Fechar modal de histórico
                 bootstrap.Modal.getInstance(document.getElementById('historicoMetasModal')).hide();
-                
-                // Abrir modal de metas
                 new bootstrap.Modal(document.getElementById('metasModal')).show();
             }
         }
 
-        // FUNÇÃO PARA CARREGAR METAS EXISTENTES
         function carregarMetasExistentes() {
             const mes = document.getElementById('metaMes').value;
-            const loja = document.getElementById('metaLoja').value;
-            
             if (!mes) {
-                alert('Selecione um mês para buscar metas existentes.');
+                alert('Selecione um mês.');
                 return;
             }
-            
             const metasFiltradas = metasMes.filter(m => m.mes === mes);
-            
             if (metasFiltradas.length === 0) {
-                alert('Nenhuma meta encontrada para o mês selecionado.');
+                alert('Nenhuma meta encontrada.');
                 return;
             }
-            
-            let mensagem = 'Metas encontradas:\n\n';
-            metasFiltradas.forEach(meta => {
-                mensagem += `Loja: ${meta.loja}\n`;
-                mensagem += `Meta Bruta: R$ ${meta.metaBruta.toFixed(2)}\n`;
-                mensagem += `Meta Líquida: R$ ${meta.metaLiquida.toFixed(2)}\n\n`;
+            let msg = 'Metas encontradas:\n\n';
+            metasFiltradas.forEach(m => {
+                msg += `Loja: ${m.loja}\nBruta: R$ ${m.metaBruta.toFixed(2)}\nLíquida: R$ ${m.metaLiquida.toFixed(2)}\n\n`;
             });
-            
-            mensagem += 'Clique em "Editar" no histórico para modificar uma meta específica.';
-            alert(mensagem);
+            msg += 'Use o histórico para editar.';
+            alert(msg);
         }
 
-        // FUNÇÃO PARA EDITAR META EXISTENTE
         function editarMetaExistente() {
-            const metaId = document.getElementById('metaId').value;
             const mes = document.getElementById('metaMes').value;
             const loja = document.getElementById('metaLoja').value;
             const metaBruta = parseFloat(document.getElementById('metaBruta').value);
@@ -1172,42 +1086,18 @@
             const metaDiretor = parseFloat(document.getElementById('metaDiretor').value) || 0;
             const metaAnalista = parseFloat(document.getElementById('metaAnalista').value) || 0;
 
-            // Validar campos obrigatórios
             if (!mes || !loja || isNaN(metaBruta) || isNaN(metaLiquida)) {
-                alert('Por favor, preencha todos os campos obrigatórios!');
+                alert('Preencha os campos obrigatórios!');
                 return;
             }
 
-            // Encontrar e atualizar a meta
             const index = metasMes.findIndex(m => m.mes === mes && m.loja === loja);
             if (index !== -1) {
-                metasMes[index] = {
-                    ...metasMes[index],
-                    metaBruta: metaBruta,
-                    metaLiquida: metaLiquida,
-                    metaGerente: metaGerente,
-                    metaDiretor: metaDiretor,
-                    metaAnalista: metaAnalista
-                };
-
-                // Registrar no histórico
-                historicoMetas.push({
-                    dataHora: new Date().toISOString(),
-                    mes: mes,
-                    loja: loja,
-                    metaBruta: metaBruta,
-                    metaLiquida: metaLiquida,
-                    metaGerente: metaGerente,
-                    metaDiretor: metaDiretor,
-                    metaAnalista: metaAnalista,
-                    usuario: currentUser.username,
-                    acao: 'EDIÇÃO'
-                });
-
+                metasMes[index] = { ...metasMes[index], metaBruta, metaLiquida, metaGerente, metaDiretor, metaAnalista };
+                historicoMetas.push({ dataHora: new Date().toISOString(), mes, loja, metaBruta, metaLiquida, metaGerente, metaDiretor, metaAnalista, usuario: currentUser.username, acao: 'EDIÇÃO' });
                 localStorage.setItem('metasMes', JSON.stringify(metasMes));
                 localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
-                
-                alert('Meta atualizada com sucesso!');
+                alert('Meta atualizada!');
                 limparFormularioMetas();
                 bootstrap.Modal.getInstance(document.getElementById('metasModal')).hide();
                 aplicarMetasNaTabela();
@@ -1215,22 +1105,14 @@
             }
         }
 
-        // FUNÇÃO PARA LIMPAR FORMULÁRIO DE METAS
         function limparFormularioMetas() {
             document.getElementById('metasForm').reset();
             document.getElementById('metaId').value = '';
             document.getElementById('btnEditarMeta').style.display = 'none';
         }
 
-        // FUNÇÃO CORRIGIDA PARA GRAVAR METAS
         function gravarMetas() {
-            // Verificar se usuário está logado
-            if (!currentUser) {
-                alert('Erro: Usuário não está logado!');
-                mostrarLogin();
-                return;
-            }
-
+            if (!currentUser) { alert('Erro: Usuário não logado!'); mostrarLogin(); return; }
             const metaMes = document.getElementById('metaMes').value;
             const metaLoja = document.getElementById('metaLoja').value;
             const metaBruta = parseFloat(document.getElementById('metaBruta').value);
@@ -1239,66 +1121,32 @@
             const metaDiretor = parseFloat(document.getElementById('metaDiretor').value) || 0;
             const metaAnalista = parseFloat(document.getElementById('metaAnalista').value) || 0;
 
-            // Validar campos obrigatórios
             if (!metaMes || !metaLoja || isNaN(metaBruta) || isNaN(metaLiquida)) {
-                alert('Por favor, preencha todos os campos obrigatórios!');
+                alert('Preencha os campos obrigatórios!');
                 return;
             }
 
-            // Verificar se já existe meta para este mês/loja
             const index = metasMes.findIndex(m => m.mes === metaMes && m.loja === metaLoja);
-            
-            const novaMeta = {
-                id: Date.now().toString(),
-                mes: metaMes,
-                loja: metaLoja,
-                metaBruta: metaBruta,
-                metaLiquida: metaLiquida,
-                metaGerente: metaGerente,
-                metaDiretor: metaDiretor,
-                metaAnalista: metaAnalista
-            };
+            const novaMeta = { id: Date.now().toString(), mes: metaMes, loja: metaLoja, metaBruta, metaLiquida, metaGerente, metaDiretor, metaAnalista };
 
             if (index !== -1) {
-                // Atualizar meta existente
                 metasMes[index] = novaMeta;
             } else {
-                // Adicionar nova meta
                 metasMes.push(novaMeta);
             }
 
-            // Registrar no histórico
-            historicoMetas.push({
-                dataHora: new Date().toISOString(),
-                mes: metaMes,
-                loja: metaLoja,
-                metaBruta: metaBruta,
-                metaLiquida: metaLiquida,
-                metaGerente: metaGerente,
-                metaDiretor: metaDiretor,
-                metaAnalista: metaAnalista,
-                usuario: currentUser.username,
-                acao: index !== -1 ? 'ATUALIZAÇÃO' : 'CRIAÇÃO'
-            });
-
+            historicoMetas.push({ dataHora: new Date().toISOString(), ...novaMeta, usuario: currentUser.username, acao: index !== -1 ? 'ATUALIZAÇÃO' : 'CRIAÇÃO' });
             localStorage.setItem('metasMes', JSON.stringify(metasMes));
             localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
-            
+
             alert('Metas salvas com sucesso!');
-            
-            // Fechar modal
             const modal = bootstrap.Modal.getInstance(document.getElementById('metasModal'));
             if (modal) modal.hide();
-            
-            // Limpar formulário
             limparFormularioMetas();
-            
-            // Atualizar tabela com novas metas
             aplicarMetasNaTabela();
             aplicarFiltro();
         }
 
-        // CADASTRO DE USUÁRIO
         document.getElementById('userForm').addEventListener('submit', e => {
             e.preventDefault();
             const username = document.getElementById('newUsername').value.trim();
@@ -1315,7 +1163,7 @@
             };
             users.push(user);
             localStorage.setItem('users', JSON.stringify(users));
-            alert('Usuário cadastrado com sucesso!');
+            alert('Usuário cadastrado!');
             bootstrap.Modal.getInstance(document.getElementById('userModal')).hide();
             e.target.reset();
             document.getElementById('storeDiv').style.display = 'none';
@@ -1323,8 +1171,7 @@
         });
 
         document.getElementById('newRole').addEventListener('change', () => {
-            document.getElementById('storeDiv').style.display = 
-                document.getElementById('newRole').value === 'gerente' ? 'block' : 'none';
+            document.getElementById('storeDiv').style.display = document.getElementById('newRole').value === 'gerente' ? 'block' : 'none';
         });
 
         function renderUserList() {
@@ -1338,12 +1185,8 @@
                     <td>${user.role}</td>
                     <td>${user.stores ? user.stores.join(', ') : '-'}</td>
                     <td>
-                        <button class="btn btn-warning btn-sm" onclick="editarUsuario(${idx})" title="Editar">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirUsuario(${idx})" title="Excluir">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                        <button class="btn btn-warning btn-sm" onclick="editarUsuario(${idx})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="excluirUsuario(${idx})">Excluir</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -1368,8 +1211,8 @@
                     username: document.getElementById('newUsername').value,
                     password: document.getElementById('newPassword').value || user.password,
                     role: document.getElementById('newRole').value,
-                    stores: document.getElementById('newRole').value === 'gerente' 
-                        ? Array.from(document.getElementById('newStore').selectedOptions).map(o => o.value) 
+                    stores: document.getElementById('newRole').value === 'gerente'
+                        ? Array.from(document.getElementById('newStore').selectedOptions).map(o => o.value)
                         : []
                 };
                 localStorage.setItem('users', JSON.stringify(users));
@@ -1389,12 +1232,10 @@
             }
         };
 
-        // Eventos
         document.getElementById('addForm').addEventListener('submit', e => {
             e.preventDefault();
             const loja = document.getElementById('addLoja').value;
             const data = document.getElementById('addData').value;
-            
             dados.push({
                 id: nextId++,
                 loja, data, diaSemana: getDiaSemana(data),
@@ -1404,7 +1245,6 @@
                 addedBy: currentUser.username,
                 dataHoraLancamento: new Date().toLocaleString('pt-BR')
             });
-            
             localStorage.setItem('dados', JSON.stringify(dados));
             aplicarMetasNaTabela();
             alert('Adicionado!');
@@ -1438,7 +1278,7 @@
             localStorage.setItem('dados', JSON.stringify(dados));
             document.getElementById('editForm').style.display = 'none';
             aplicarFiltro();
-        };
+        });
 
         window.excluirRegistro = function(id) {
             if (confirm('Excluir registro?')) {
@@ -1450,7 +1290,6 @@
 
         document.getElementById('userListModal').addEventListener('shown.bs.modal', renderUserList);
 
-        // INICIALIZAÇÃO
         window.addEventListener('resize', checkScreenSize);
         window.addEventListener('load', function() {
             checkScreenSize();
