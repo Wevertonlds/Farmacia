@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -125,8 +125,7 @@
         .hidden { display: none; }
         .meta-ok { background-color: #d4edda !important; color: #155724; }
         .meta-no { background-color: #f8d7da !important; color: #721c24; }
-       
-        /* Responsividade melhorada */
+      
         @media (max-width: 768px) {
             .sidebar {
                 position: fixed;
@@ -171,7 +170,7 @@
                 padding: 10px;
             }
         }
-       
+      
         @media (max-width: 576px) {
             body {
                 font-size: 13px;
@@ -200,7 +199,7 @@
                 padding: 0.4rem 0.8rem;
             }
         }
-       
+      
         .toggle-btn {
             display: none;
             background-color: #0d6efd;
@@ -213,7 +212,7 @@
             left: 10px;
             z-index: 101;
         }
-       
+      
         .overlay {
             display: none;
             position: fixed;
@@ -224,12 +223,11 @@
             background: rgba(0,0,0,0.5);
             z-index: 99;
         }
-       
+      
         .overlay.active {
             display: block;
         }
-       
-        /* Ajustes para telas muito pequenas */
+      
         @media (max-width: 360px) {
             .container-fluid {
                 padding-left: 5px;
@@ -239,18 +237,16 @@
                 font-size: 0.7rem;
             }
         }
-       
-        /* Melhorias para formulários em mobile */
+      
         .form-control, .form-select {
             font-size: 0.9rem;
         }
-       
+      
         @media (max-width: 768px) {
             .form-control, .form-select {
-                font-size: 16px; /* Previne zoom no iOS */
+                font-size: 16px;
             }
         }
-        /* Botão de relatório */
         .btn-relatorio {
             background-color: #28a745;
             color: white;
@@ -281,6 +277,7 @@
             </div>
         </div>
     </div>
+
     <!-- APLICATIVO -->
     <div id="app" class="container-fluid">
         <div class="row">
@@ -289,7 +286,7 @@
                 <i class="bi bi-filter-left"></i>
             </button>
             <div class="overlay" onclick="toggleSidebar()"></div>
-           
+          
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
                 <h5 class="text-center mb-4">Filtros</h5>
                 <div class="list-group">
@@ -306,6 +303,7 @@
                         <input type="date" class="form-control mb-3" id="filtroData">
                     </div>
                     <button class="btn btn-custom w-100" onclick="aplicarFiltro()">Aplicar Filtro</button>
+
                     <!-- ADMINISTRAÇÃO -->
                     <div id="adminMenu" class="mt-4" style="display:none;">
                         <label class="list-group-item">Administração</label>
@@ -327,12 +325,14 @@
                     </div>
                 </div>
             </nav>
+
             <!-- Main Content -->
             <main class="col-md-9 col-lg-10 content ms-auto">
                 <div class="container-fluid mt-3">
                     <h1 class="text-center mb-3 text-primary">Gestão de Vendas - Farmácia</h1>
                     <p class="text-center text-muted">Atualizado em <span id="currentDate"></span></p>
                     <div id="userInfo" class="text-end mb-3"></div>
+
                     <!-- CRUD -->
                     <div class="row mb-3">
                         <div class="col-12">
@@ -419,6 +419,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Tabela Principal -->
                     <div class="table-responsive">
                         <div id="tabelaContainer"></div>
@@ -430,6 +431,7 @@
             </main>
         </div>
     </div>
+
     <!-- MODAL RELATÓRIO DE VENDAS -->
     <div class="modal fade" id="relatorioVendasModal" tabindex="-1">
         <div class="modal-dialog modal-xl">
@@ -461,28 +463,31 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <button class="btn btn-relatorio me-2" onclick="gerarRelatorio()">
-                                <i class="bi bi-search"></i> Gerar Relatório
+                                Gerar Relatório
                             </button>
                             <button class="btn btn-success" onclick="exportarParaExcel()" id="btnExportarExcel" disabled>
-                                <i class="bi bi-file-earmark-excel"></i> Exportar para Excel
+                                Exportar para Excel
                             </button>
                         </div>
                     </div>
-                   
                     <div class="table-responsive">
                         <table class="table table-striped table-sm">
                             <thead class="table-primary">
                                 <tr>
                                     <th>ID</th>
                                     <th>Loja</th>
-                                    <th>Data Venda</th>
-                                    <th>Dia Semana</th>
-                                    <th>Realizado Bruta</th>
-                                    <th>Realizado Líquida</th>
+                                    <th>Data</th>
+                                    <th>Dia</th>
+                                    <th>Meta Bruta</th>
+                                    <th>Real Bruta</th>
+                                    <th>Dif. Bruta</th>
+                                    <th>Meta Líq.</th>
+                                    <th>Real Líq.</th>
+                                    <th>Dif. Líq.</th>
                                     <th>Clientes</th>
-                                    <th>Ticket Médio</th>
+                                    <th>Ticket</th>
                                     <th>Usuário</th>
-                                    <th>Data/Hora Lançamento</th>
+                                    <th>Lançamento</th>
                                 </tr>
                             </thead>
                             <tbody id="relatorioVendasBody"></tbody>
@@ -492,6 +497,7 @@
             </div>
         </div>
     </div>
+
     <!-- MODAL CALIBRAGEM -->
     <div class="modal fade" id="metasModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
@@ -503,13 +509,12 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-between mb-3">
                         <button type="button" class="btn btn-outline-primary" onclick="carregarMetasExistentes()">
-                            <i class="bi bi-search"></i> Buscar Metas Existentes
+                            Buscar Metas Existentes
                         </button>
                         <button type="button" class="btn btn-outline-info" onclick="limparFormularioMetas()">
-                            <i class="bi bi-plus-circle"></i> Nova Meta
+                            Nova Meta
                         </button>
                     </div>
-                   
                     <form id="metasForm" class="row g-3">
                         <input type="hidden" id="metaId">
                         <div class="col-md-6">
@@ -547,7 +552,7 @@
                         <div class="col-12">
                             <button type="button" class="btn btn-custom" onclick="gravarMetas()">Gravar Metas</button>
                             <button type="button" class="btn btn-warning" onclick="editarMetaExistente()" id="btnEditarMeta" style="display:none;">
-                                <i class="bi bi-pencil"></i> Editar Meta
+                                Editar Meta
                             </button>
                         </div>
                     </form>
@@ -555,6 +560,7 @@
             </div>
         </div>
     </div>
+
     <!-- MODAL HISTÓRICO DE METAS -->
     <div class="modal fade" id="historicoMetasModal" tabindex="-1">
         <div class="modal-dialog modal-xl">
@@ -587,6 +593,7 @@
             </div>
         </div>
     </div>
+
     <!-- TELA DE METAS -->
     <div class="modal fade" id="telaMetasModal" tabindex="-1">
         <div class="modal-dialog modal-xl">
@@ -620,6 +627,7 @@
             </div>
         </div>
     </div>
+
     <!-- MODAL LISTA DE USUÁRIOS -->
     <div class="modal fade" id="userListModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
@@ -649,6 +657,7 @@
             </div>
         </div>
     </div>
+
     <!-- MODAL CADASTRO USUÁRIO -->
     <div class="modal fade" id="userModal" tabindex="-1">
         <div class="modal-dialog">
@@ -689,487 +698,433 @@
             </div>
         </div>
     </div>
-   <script>
-    // VARIÁVEIS GLOBAIS
-    let dados = JSON.parse(localStorage.getItem('dados')) || [];
-    let metasMes = JSON.parse(localStorage.getItem('metasMes')) || [];
-    let historicoMetas = JSON.parse(localStorage.getItem('historicoMetas')) || [];
-    let users = JSON.parse(localStorage.getItem('users')) || [{username: 'admin', password: 'admin123', role: 'ceo'}];
-    let currentUser = null;
-    let nextId = dados.length > 0 ? Math.max(...dados.map(d => d.id)) + 1 : 1;
-    const todasLojas = ['Loja A', 'Loja B', 'Loja C'];
-    let dadosRelatorio = [];
 
-    // FUNÇÕES DE INICIALIZAÇÃO
-    function preencherDiaSemana() {
-        const dias = ['segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado','domingo'];
-        ['addDiaSemana', 'editDiaSemana'].forEach(id => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.innerHTML = dias.map(d => `<option value="${d}">${d}</option>`).join('');
+    <script>
+        // === VARIÁVEIS GLOBAIS ===
+        let dados = JSON.parse(localStorage.getItem('dados')) || [];
+        let metasMes = JSON.parse(localStorage.getItem('metasMes')) || [];
+        let historicoMetas = JSON.parse(localStorage.getItem('historicoMetas')) || [];
+        let users = JSON.parse(localStorage.getItem('users')) || [{username: 'admin', password: 'admin123', role: 'ceo'}];
+        let currentUser = null;
+        let nextId = dados.length > 0 ? Math.max(...dados.map(d => d.id)) + 1 : 1;
+        const todasLojas = ['Loja A', 'Loja B', 'Loja C'];
+        let dadosRelatorio = [];
+
+        // === INICIALIZAÇÃO ===
+        function preencherDiaSemana() {
+            const dias = ['segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado','domingo'];
+            ['addDiaSemana', 'editDiaSemana'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = dias.map(d => `<option value="${d}">${d}</option>`).join('');
+            });
+        }
+
+        function mostrarLogin() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('app').style.display = 'none';
+        }
+
+        function atualizarCampoData() {
+            const periodo = document.getElementById('filtroPeriodo').value;
+            const div = document.getElementById('filtroDataDiv');
+            if (periodo === 'dia' || periodo === 'mes') {
+                div.style.display = 'block';
+                document.getElementById('filtroData').type = periodo === 'mes' ? 'month' : 'date';
+            } else {
+                div.style.display = 'none';
+            }
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.querySelector('.overlay').classList.toggle('active');
+        }
+
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR');
+
+        function checkScreenSize() {
+            const btn = document.querySelector('.toggle-btn');
+            if (window.innerWidth < 768) btn.style.display = 'block';
+            else {
+                btn.style.display = 'none';
+                document.getElementById('sidebar').classList.remove('active');
+                document.querySelector('.overlay').classList.remove('active');
+            }
+        }
+
+        // === LOGIN CORRIGIDO ===
+        document.getElementById('loginForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const user = users.find(u => u.username.toLowerCase() === username && u.password === password);
+            if (user) {
+                currentUser = { ...user };
+                if (user.role === 'gerente') currentUser.stores = user.stores || [];
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+                document.getElementById('userInfo').innerHTML = `Logado: ${currentUser.username} (${currentUser.role}) <button class="btn btn-sm btn-danger ms-2" onclick="logout()">Sair</button>`;
+                document.getElementById('adminMenu').style.display = ['ceo','admin','diretor','gerente'].includes(currentUser.role) ? 'block' : 'none';
+                configurarLojasUsuario();
+                aplicarMetasNaTabela();
+                aplicarFiltro();
+                e.target.reset();
+            } else {
+                alert('Usuário ou senha inválidos.');
             }
         });
-    }
 
-    function mostrarLogin() {
-        document.getElementById('loginScreen').style.display = 'flex';
-        document.getElementById('app').style.display = 'none';
-    }
-
-    function atualizarCampoData() {
-        const periodo = document.getElementById('filtroPeriodo').value;
-        const dataDiv = document.getElementById('filtroDataDiv');
-        if (periodo === 'dia' || periodo === 'mes') {
-            dataDiv.style.display = 'block';
-            document.getElementById('filtroData').type = periodo === 'mes' ? 'month' : 'date';
-        } else {
-            dataDiv.style.display = 'none';
+        function logout() {
+            currentUser = null;
+            document.getElementById('app').style.display = 'none';
+            mostrarLogin();
         }
-    }
 
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.querySelector('.overlay');
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-    }
-
-    document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR');
-
-    function checkScreenSize() {
-        const toggleBtn = document.querySelector('.toggle-btn');
-        if (window.innerWidth < 768) {
-            toggleBtn.style.display = 'block';
-        } else {
-            toggleBtn.style.display = 'none';
-            document.getElementById('sidebar').classList.remove('active');
-            document.querySelector('.overlay').classList.remove('active');
+        function configurarLojasUsuario() {
+            const container = document.getElementById('lojasFiltros');
+            container.innerHTML = '';
+            const lojas = currentUser.role === 'gerente' ? currentUser.stores || [] : todasLojas;
+            lojas.forEach(l => container.innerHTML += `<a href="#" class="nav-link" data-loja="${l}">${l}</a>`);
+            document.querySelectorAll('#lojasFiltros .nav-link').forEach(link => {
+                link.addEventListener('click', e => { e.preventDefault(); link.classList.toggle('active'); aplicarFiltro(); });
+            });
+            ['addLoja', 'editLoja'].forEach(id => {
+                const select = document.getElementById(id);
+                if (select) select.innerHTML = lojas.map(l => `<option value="${l}">${l}</option>`).join('');
+            });
         }
-    }
 
-    // === CORRIGIDO: LOGIN AGORA FUNCIONA ===
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const username = document.getElementById('username').value.trim().toLowerCase();
-        const password = document.getElementById('password').value;
+        function getDiaSemana(dateStr) {
+            const dias = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+            return dias[new Date(dateStr + 'T12:00:00').getDay()];
+        }
 
-        const user = users.find(u => u.username.toLowerCase() === username && u.password === password);
-        if (user) {
-            currentUser = { ...user };
-            if (user.role === 'gerente') currentUser.stores = user.stores || [];
+        function aplicarMetasNaTabela() {
+            dados.forEach(r => {
+                const mes = r.data.slice(0,7);
+                const meta = metasMes.find(m => m.mes === mes && m.loja === r.loja) || 
+                            metasMes.find(m => m.mes === mes && m.loja === 'TODAS') || 
+                            { metaBruta:0, metaLiquida:0, metaGerente:0, metaDiretor:0, metaAnalista:0 };
+                Object.assign(r, {
+                    metaBruta: meta.metaBruta,
+                    metaLiquida: meta.metaLiquida,
+                    metaGerente: meta.metaGerente || 0,
+                    metaDiretor: meta.metaDiretor || 0,
+                    metaAnalista: meta.metaAnalista || 0,
+                    diferencaBruta: r.realizadoBruta - meta.metaBruta,
+                    diferencaLiquida: r.realizadoLiquida - meta.metaLiquida,
+                    ticket: r.realizadoBruta / r.clientes || 0
+                });
+            });
+            localStorage.setItem('dados', JSON.stringify(dados));
+        }
 
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-            document.getElementById('userInfo').innerHTML = `
-                Logado: ${currentUser.username} (${currentUser.role})
-                <button class="btn btn-sm btn-danger ms-2" onclick="logout()">Sair</button>
-            `;
+        function aplicarFiltro() {
+            if (!currentUser) return;
+            const periodo = document.getElementById('filtroPeriodo').value;
+            const dataFiltro = document.getElementById('filtroData').value;
+            const lojasAtivas = Array.from(document.querySelectorAll('#lojasFiltros .nav-link.active')).map(l => l.dataset.loja);
+            const filtrados = dados.filter(r => {
+                if (currentUser.role === 'gerente' && !currentUser.stores.includes(r.loja)) return false;
+                if (currentUser.role === 'analista' && r.addedBy !== currentUser.username) return false;
+                if (lojasAtivas.length && !lojasAtivas.includes(r.loja)) return false;
+                if (periodo === 'dia' && dataFiltro && r.data !== dataFiltro) return false;
+                if (periodo === 'mes' && dataFiltro && r.data.slice(0,7) !== dataFiltro.slice(0,7)) return false;
+                return true;
+            });
+            renderTabela(filtrados);
+            renderTelaMetas(filtrados);
+        }
 
-            const adminMenu = document.getElementById('adminMenu');
-            if (['ceo', 'admin', 'diretor', 'gerente'].includes(currentUser.role)) {
-                adminMenu.style.display = 'block';
-            } else {
-                adminMenu.style.display = 'none';
-            }
+        function renderTabela(dadosFiltrados) {
+            let html = `<table class="table table-striped table-sm"><thead><tr><th>Loja</th><th>Data</th><th>Dia</th><th>Meta Bruta</th><th>Real. Bruta</th><th>Dif.</th><th>Meta Líq.</th><th>Real. Líq.</th><th>Dif.</th><th>Clientes</th><th>Ticket</th><th>Ações</th></tr></thead><tbody>`;
+            dadosFiltrados.forEach(r => {
+                const cb = r.diferencaBruta < 0 ? 'below-meta' : 'above-meta';
+                const cl = r.diferencaLiquida < 0 ? 'below-meta' : 'above-meta';
+                html += `<tr>
+                    <td>${r.loja}</td>
+                    <td>${r.data}</td>
+                    <td>${r.diaSemana}</td>
+                    <td>R$ ${r.metaBruta.toFixed(2)}</td>
+                    <td class="${cb}">R$ ${r.realizadoBruta.toFixed(2)}</td>
+                    <td>R$ ${r.diferencaBruta.toFixed(2)}</td>
+                    <td>R$ ${r.metaLiquida.toFixed(2)}</td>
+                    <td class="${cl}">R$ ${r.realizadoLiquida.toFixed(2)}</td>
+                    <td>R$ ${r.diferencaLiquida.toFixed(2)}</td>
+                    <td>${r.clientes}</td>
+                    <td>R$ ${r.ticket.toFixed(2)}</td>
+                    <td class="action-btns">
+                        <button class="btn btn-warning btn-sm" onclick="editarRegistro(${r.id})"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="excluirRegistro(${r.id})"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            document.getElementById('tabelaContainer').innerHTML = html;
+        }
 
-            configurarLojasUsuario();
+        function renderTelaMetas(dadosFiltrados) {
+            const tbody = document.getElementById('telaMetasBody');
+            tbody.innerHTML = '';
+            dadosFiltrados.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${r.data}</td>
+                    <td>${r.loja}</td>
+                    <td>R$ ${r.realizadoBruta.toFixed(2)}</td>
+                    <td>R$ ${r.metaBruta.toFixed(2)}</td>
+                    <td class="${r.realizadoBruta >= r.metaBruta ? 'meta-ok' : 'meta-no'}">${r.realizadoBruta >= r.metaBruta ? 'OK' : 'Não'}</td>
+                    <td>R$ ${r.realizadoLiquida.toFixed(2)}</td>
+                    <td>R$ ${r.metaLiquida.toFixed(2)}</td>
+                    <td class="${r.realizadoLiquida >= r.metaLiquida ? 'meta-ok' : 'meta-no'}">${r.realizadoLiquida >= r.metaLiquida ? 'OK' : 'Não'}</td>
+                    <td class="${r.realizadoBruta >= r.metaGerente ? 'meta-ok' : 'meta-no'}">R$ ${r.metaGerente.toFixed(2)}</td>
+                    <td class="${r.realizadoBruta >= r.metaDiretor ? 'meta-ok' : 'meta-no'}">R$ ${r.metaDiretor.toFixed(2)}</td>
+                    <td class="${r.realizadoBruta >= r.metaAnalista ? 'meta-ok' : 'meta-no'}">R$ ${r.metaAnalista.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // === GRAVAR METAS + ATUALIZAÇÃO EM TEMPO REAL ===
+        function gravarMetas() {
+            if (!currentUser) return alert('Usuário não logado!');
+            const mes = document.getElementById('metaMes').value;
+            const loja = document.getElementById('metaLoja').value;
+            const bruta = parseFloat(document.getElementById('metaBruta').value);
+            const liquida = parseFloat(document.getElementById('metaLiquida').value);
+            const gerente = parseFloat(document.getElementById('metaGerente').value) || 0;
+            const diretor = parseFloat(document.getElementById('metaDiretor').value) || 0;
+            const analista = parseFloat(document.getElementById('metaAnalista').value) || 0;
+
+            if (!mes || !loja || isNaN(bruta) || isNaN(liquida)) return alert('Preencha os campos obrigatórios!');
+
+            const index = metasMes.findIndex(m => m.mes === mes && m.loja === loja);
+            const novaMeta = { id: Date.now().toString(), mes, loja, metaBruta: bruta, metaLiquida: liquida, metaGerente: gerente, metaDiretor: diretor, metaAnalista: analista };
+
+            if (index !== -1) metasMes[index] = novaMeta;
+            else metasMes.push(novaMeta);
+
+            historicoMetas.push({ dataHora: new Date().toISOString(), ...novaMeta, usuario: currentUser.username, acao: index !== -1 ? 'ATUALIZAÇÃO' : 'CRIAÇÃO' });
+            localStorage.setItem('metasMes', JSON.stringify(metasMes));
+            localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
+
+            alert('Metas salvas com sucesso!');
+            bootstrap.Modal.getInstance(document.getElementById('metasModal')).hide();
+            limparFormularioMetas();
             aplicarMetasNaTabela();
             aplicarFiltro();
-            document.getElementById('loginForm').reset();
-        } else {
-            alert('Usuário ou senha inválidos.');
-        }
-    });
-
-    function logout() {
-        currentUser = null;
-        document.getElementById('app').style.display = 'none';
-        document.getElementById('loginScreen').style.display = 'flex';
-        document.getElementById('loginForm').reset();
-    }
-
-    function configurarLojasUsuario() {
-        const lojasContainer = document.getElementById('lojasFiltros');
-        lojasContainer.innerHTML = '';
-        const lojasDisponiveis = currentUser.role === 'gerente' ? currentUser.stores || [] : todasLojas;
-        lojasDisponiveis.forEach(loja => {
-            lojasContainer.innerHTML += `<a href="#" class="nav-link" data-loja="${loja}">${loja}</a>`;
-        });
-        document.querySelectorAll('#lojasFiltros .nav-link').forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                link.classList.toggle('active');
-                aplicarFiltro();
-            });
-        });
-        ['addLoja', 'editLoja'].forEach(id => {
-            const select = document.getElementById(id);
-            if (select) select.innerHTML = lojasDisponiveis.map(l => `<option value="${l}">${l}</option>`).join('');
-        });
-    }
-
-    function getDiaSemana(dateStr) {
-        const dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
-        return dias[new Date(dateStr + 'T12:00:00').getDay()];
-    }
-
-    function aplicarMetasNaTabela() {
-        dados.forEach(registro => {
-            const mes = registro.data.slice(0, 7);
-            const metaEspecifica = metasMes.find(m => m.mes === mes && m.loja === registro.loja);
-            const metaGeral = metasMes.find(m => m.mes === mes && m.loja === 'TODAS');
-            const meta = metaEspecifica || metaGeral || { metaBruta: 0, metaLiquida: 0, metaGerente: 0, metaDiretor: 0, metaAnalista: 0 };
-            registro.metaBruta = meta.metaBruta;
-            registro.metaLiquida = meta.metaLiquida;
-            registro.metaGerente = meta.metaGerente || 0;
-            registro.metaDiretor = meta.metaDiretor || 0;
-            registro.metaAnalista = meta.metaAnalista || 0;
-            registro.diferencaBruta = registro.realizadoBruta - registro.metaBruta;
-            registro.diferencaLiquida = registro.realizadoLiquida - registro.metaLiquida;
-            registro.ticket = registro.realizadoBruta / registro.clientes || 0;
-        });
-        localStorage.setItem('dados', JSON.stringify(dados));
-    }
-
-    function aplicarFiltro() {
-        if (!currentUser) return;
-        const periodo = document.getElementById('filtroPeriodo').value;
-        const dataFiltro = document.getElementById('filtroData').value;
-        const lojasAtivas = Array.from(document.querySelectorAll('#lojasFiltros .nav-link.active')).map(l => l.dataset.loja);
-        let filtrados = dados.filter(row => {
-            if (currentUser.role === 'gerente' && !currentUser.stores.includes(row.loja)) return false;
-            if (currentUser.role === 'analista' && row.addedBy !== currentUser.username) return false;
-            if (lojasAtivas.length > 0 && !lojasAtivas.includes(row.loja)) return false;
-            if (periodo === 'dia' && dataFiltro && row.data !== dataFiltro) return false;
-            if (periodo === 'mes' && dataFiltro && row.data.slice(0, 7) !== dataFiltro.slice(0, 7)) return false;
-            return true;
-        });
-        renderTabela(filtrados);
-        renderTelaMetas(filtrados);
-    }
-
-    function renderTabela(dadosFiltrados) {
-        let html = '<table class="table table-striped table-sm"><thead><tr><th>Loja</th><th>Data</th><th>Dia</th><th>Meta Bruta</th><th>Real. Bruta</th><th>Dif.</th><th>Meta Líq.</th><th>Real. Líq.</th><th>Dif.</th><th>Clientes</th><th>Ticket</th><th>Ações</th></tr></thead><tbody>';
-        dadosFiltrados.forEach(row => {
-            const classBruta = row.diferencaBruta < 0 ? 'below-meta' : 'above-meta';
-            const classLiquida = row.diferencaLiquida < 0 ? 'below-meta' : 'above-meta';
-            html += `<tr>
-                <td>${row.loja}</td>
-                <td>${row.data}</td>
-                <td>${row.diaSemana}</td>
-                <td>R$ ${row.metaBruta.toFixed(2)}</td>
-                <td class="${classBruta}">R$ ${row.realizadoBruta.toFixed(2)}</td>
-                <td>R$ ${row.diferencaBruta.toFixed(2)}</td>
-                <td>R$ ${row.metaLiquida.toFixed(2)}</td>
-                <td class="${classLiquida}">R$ ${row.realizadoLiquida.toFixed(2)}</td>
-                <td>R$ ${row.diferencaLiquida.toFixed(2)}</td>
-                <td>${row.clientes}</td>
-                <td>R$ ${row.ticket.toFixed(2)}</td>
-                <td class="action-btns">
-                    <button class="btn btn-warning btn-sm" onclick="editarRegistro(${row.id})"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="excluirRegistro(${row.id})"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>`;
-        });
-        html += '</tbody></table>';
-        document.getElementById('tabelaContainer').innerHTML = html;
-    }
-
-    function renderTelaMetas(dadosFiltrados) {
-        const tbody = document.getElementById('telaMetasBody');
-        tbody.innerHTML = '';
-        dadosFiltrados.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${row.data}</td>
-                <td>${row.loja}</td>
-                <td>R$ ${row.realizadoBruta.toFixed(2)}</td>
-                <td>R$ ${row.metaBruta.toFixed(2)}</td>
-                <td class="${row.realizadoBruta >= row.metaBruta ? 'meta-ok' : 'meta-no'}">${row.realizadoBruta >= row.metaBruta ? 'OK' : 'Não'}</td>
-                <td>R$ ${row.realizadoLiquida.toFixed(2)}</td>
-                <td>R$ ${row.metaLiquida.toFixed(2)}</td>
-                <td class="${row.realizadoLiquida >= row.metaLiquida ? 'meta-ok' : 'meta-no'}">${row.realizadoLiquida >= row.metaLiquida ? 'OK' : 'Não'}</td>
-                <td class="${row.realizadoBruta >= row.metaGerente ? 'meta-ok' : 'meta-no'}">R$ ${row.metaGerente.toFixed(2)}</td>
-                <td class="${row.realizadoBruta >= row.metaDiretor ? 'meta-ok' : 'meta-no'}">R$ ${row.metaDiretor.toFixed(2)}</td>
-                <td class="${row.realizadoBruta >= row.metaAnalista ? 'meta-ok' : 'meta-no'}">R$ ${row.metaAnalista.toFixed(2)}</td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    // === MELHORIA 1: GRAVAR METAS + ATUALIZA TABELA EM TEMPO REAL ===
-    function gravarMetas() {
-        if (!currentUser) { alert('Erro: Usuário não logado!'); mostrarLogin(); return; }
-        const metaMes = document.getElementById('metaMes').value;
-        const metaLoja = document.getElementById('metaLoja').value;
-        const metaBruta = parseFloat(document.getElementById('metaBruta').value);
-        const metaLiquida = parseFloat(document.getElementById('metaLiquida').value);
-        const metaGerente = parseFloat(document.getElementById('metaGerente').value) || 0;
-        const metaDiretor = parseFloat(document.getElementById('metaDiretor').value) || 0;
-        const metaAnalista = parseFloat(document.getElementById('metaAnalista').value) || 0;
-
-        if (!metaMes || !metaLoja || isNaN(metaBruta) || isNaN(metaLiquida)) {
-            alert('Preencha os campos obrigatórios!');
-            return;
         }
 
-        const index = metasMes.findIndex(m => m.mes === metaMes && m.loja === metaLoja);
-        const novaMeta = { id: Date.now().toString(), mes: metaMes, loja: metaLoja, metaBruta, metaLiquida, metaGerente, metaDiretor, metaAnalista };
-
-        if (index !== -1) metasMes[index] = novaMeta;
-        else metasMes.push(novaMeta);
-
-        historicoMetas.push({ 
-            dataHora: new Date().toISOString(), 
-            ...novaMeta, 
-            usuario: currentUser.username, 
-            acao: index !== -1 ? 'ATUALIZAÇÃO' : 'CRIAÇÃO' 
-        });
-
-        localStorage.setItem('metasMes', JSON.stringify(metasMes));
-        localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
-
-        alert('Metas salvas com sucesso!');
-        const modal = bootstrap.Modal.getInstance(document.getElementById('metasModal'));
-        if (modal) modal.hide();
-        limparFormularioMetas();
-
-        aplicarMetasNaTabela();
-        aplicarFiltro(); // ATUALIZA TABELA EM TEMPO REAL
-    }
-
-    // === MELHORIA 2: HISTÓRICO COM BOTÃO EXCLUIR ===
-    function renderHistoricoMetas() {
-        const tbody = document.getElementById('historicoMetasBody');
-        tbody.innerHTML = '';
-        [...historicoMetas].sort((a,b) => new Date(b.dataHora) - new Date(a.dataHora)).forEach((meta, idx) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${new Date(meta.dataHora).toLocaleString('pt-BR')}</td>
-                <td>${meta.mes}</td>
-                <td>${meta.loja}</td>
-                <td>R$ ${meta.metaBruta.toFixed(2)}</td>
-                <td>R$ ${meta.metaLiquida.toFixed(2)}</td>
-                <td>R$ ${meta.metaGerente.toFixed(2)}</td>
-                <td>R$ ${meta.metaDiretor.toFixed(2)}</td>
-                <td>R$ ${meta.metaAnalista.toFixed(2)}</td>
-                <td>${meta.usuario}</td>
-                <td>
-                    <button class="btn btn-warning btn-sm" onclick="carregarMetaParaEdicao('${meta.mes}', '${meta.loja}')"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="excluirHistoricoMeta(${idx})"><i class="bi bi-trash"></i></button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    window.excluirHistoricoMeta = function(idx) {
-        if (confirm('Excluir este registro do histórico?')) {
-            historicoMetas.splice(idx, 1);
-            localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
+        // === HISTÓRICO COM BOTÃO EXCLUIR ===
+        function abrirHistoricoMetas() {
             renderHistoricoMetas();
-        }
-    };
-
-    // === MELHORIA 3: RELATÓRIO COM METAS + EXCEL ===
-    function renderRelatorioVendas() {
-        const tbody = document.getElementById('relatorioVendasBody');
-        tbody.innerHTML = '';
-        if (dadosRelatorio.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="14" class="text-center">Nenhum dado encontrado.</td></tr>';
-            return;
-        }
-        dadosRelatorio.forEach(v => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${v.id}</td>
-                <td>${v.loja}</td>
-                <td>${v.data}</td>
-                <td>${v.diaSemana}</td>
-                <td>R$ ${v.metaBruta.toFixed(2)}</td>
-                <td>R$ ${v.realizadoBruta.toFixed(2)}</td>
-                <td>R$ ${v.diferencaBruta.toFixed(2)}</td>
-                <td>R$ ${v.metaLiquida.toFixed(2)}</td>
-                <td>R$ ${v.realizadoLiquida.toFixed(2)}</td>
-                <td>R$ ${v.diferencaLiquida.toFixed(2)}</td>
-                <td>${v.clientes}</td>
-                <td>R$ ${(v.realizadoBruta / v.clientes || 0).toFixed(2)}</td>
-                <td>${v.addedBy || 'N/A'}</td>
-                <td>${v.dataHoraLancamento || 'N/A'}</td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    function exportarParaExcel() {
-        const dadosExcel = dadosRelatorio.map(v => ({
-            'ID': v.id,
-            'Loja': v.loja,
-            'Data': v.data,
-            'Dia': v.diaSemana,
-            'Meta Bruta': v.metaBruta,
-            'Real Bruta': v.realizadoBruta,
-            'Dif. Bruta': v.diferencaBruta,
-            'Meta Líq.': v.metaLiquida,
-            'Real Líq.': v.realizadoLiquida,
-            'Dif. Líq.': v.diferencaLiquida,
-            'Clientes': v.clientes,
-            'Ticket': (v.realizadoBruta / v.clientes || 0).toFixed(2),
-            'Usuário': v.addedBy || 'N/A',
-            'Lançamento': v.dataHoraLancamento || 'N/A'
-        }));
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(dadosExcel);
-        XLSX.utils.book_append_sheet(wb, ws, "Relatório");
-        XLSX.writeFile(wb, `relatorio_${new Date().toISOString().slice(0,10)}.xlsx`);
-    }
-
-    // === OUTRAS FUNÇÕES (mantidas com pequenas correções) ===
-    function abrirRelatorioVendas() {
-        const dataFim = new Date().toISOString().split('T')[0];
-        const dataInicio = new Date(); dataInicio.setDate(dataInicio.getDate() - 30);
-        document.getElementById('relatorioDataInicio').value = dataInicio.toISOString().split('T')[0];
-        document.getElementById('relatorioDataFim').value = dataFim;
-        new bootstrap.Modal(document.getElementById('relatorioVendasModal')).show();
-    }
-
-    function gerarRelatorio() {
-        const inicio = document.getElementById('relatorioDataInicio').value;
-        const fim = document.getElementById('relatorioDataFim').value;
-        const loja = document.getElementById('relatorioLoja').value;
-        if (!inicio || !fim) return alert('Selecione as datas.');
-        dadosRelatorio = dados.filter(v => {
-            const data = new Date(v.data);
-            const i = new Date(inicio); const f = new Date(fim); f.setDate(f.getDate() + 1);
-            return data >= i && data < f && (loja === 'TODAS' || v.loja === loja);
-        }).sort((a,b) => new Date(b.data) - new Date(a.data));
-        renderRelatorioVendas();
-        document.getElementById('btnExportarExcel').disabled = false;
-    }
-
-    function carregarMetaParaEdicao(mes, loja) {
-        const meta = metasMes.find(m => m.mes === mes && m.loja === loja);
-        if (!meta) return;
-        document.getElementById('metaMes').value = meta.mes;
-        document.getElementById('metaLoja').value = meta.loja;
-        document.getElementById('metaBruta').value = meta.metaBruta;
-        document.getElementById('metaLiquida').value = meta.metaLiquida;
-        document.getElementById('metaGerente').value = meta.metaGerente;
-        document.getElementById('metaDiretor').value = meta.metaDiretor;
-        document.getElementById('metaAnalista').value = meta.metaAnalista;
-        document.getElementById('btnEditarMeta').style.display = 'inline-block';
-        bootstrap.Modal.getInstance(document.getElementById('historicoMetasModal')).hide();
-        new bootstrap.Modal(document.getElementById('metasModal')).show();
-    }
-
-    function editarMetaExistente() {
-        const mes = document.getElementById('metaMes').value;
-        const loja = document.getElementById('metaLoja').value;
-        const index = metasMes.findIndex(m => m.mes === mes && m.loja === loja);
-        if (index === -1) return alert('Meta não encontrada!');
-        metasMes[index] = {
-            ...metasMes[index],
-            metaBruta: parseFloat(document.getElementById('metaBruta').value),
-            metaLiquida: parseFloat(document.getElementById('metaLiquida').value),
-            metaGerente: parseFloat(document.getElementById('metaGerente').value) || 0,
-            metaDiretor: parseFloat(document.getElementById('metaDiretor').value) || 0,
-            metaAnalista: parseFloat(document.getElementById('metaAnalista').value) || 0
-        };
-        historicoMetas.push({ dataHora: new Date().toISOString(), ...metasMes[index], usuario: currentUser.username, acao: 'EDIÇÃO' });
-        localStorage.setItem('metasMes', JSON.stringify(metasMes));
-        localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
-        alert('Meta atualizada!');
-        bootstrap.Modal.getInstance(document.getElementById('metasModal')).hide();
-        limparFormularioMetas();
-        aplicarMetasNaTabela();
-        aplicarFiltro();
-    }
-
-    function limparFormularioMetas() {
-        document.getElementById('metasForm').reset();
-        document.getElementById('btnEditarMeta').style.display = 'none';
-    }
-
-    // CRUD
-    document.getElementById('addForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const loja = document.getElementById('addLoja').value;
-        const data = document.getElementById('addData').value;
-        const realizadoBruta = parseFloat(document.getElementById('addRealizadoBruta').value);
-        const realizadoLiquida = parseFloat(document.getElementById('addRealizadoLiquida').value);
-        const clientes = parseInt(document.getElementById('addClientes').value);
-
-        if (!loja || !data || isNaN(realizadoBruta) || isNaN(realizadoLiquida) || isNaN(clientes)) {
-            alert('Preencha todos os campos!');
-            return;
+            new bootstrap.Modal(document.getElementById('historicoMetasModal')).show();
         }
 
-        dados.push({
-            id: nextId++,
-            loja, data, diaSemana: getDiaSemana(data),
-            realizadoBruta, realizadoLiquida, clientes,
-            addedBy: currentUser.username,
-            dataHoraLancamento: new Date().toLocaleString('pt-BR')
-        });
+        function renderHistoricoMetas() {
+            const tbody = document.getElementById('historicoMetasBody');
+            tbody.innerHTML = '';
+            [...historicoMetas].sort((a,b) => new Date(b.dataHora) - new Date(a.dataHora)).forEach((m, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${new Date(m.dataHora).toLocaleString('pt-BR')}</td>
+                    <td>${m.mes}</td>
+                    <td>${m.loja}</td>
+                    <td>R$ ${m.metaBruta.toFixed(2)}</td>
+                    <td>R$ ${m.metaLiquida.toFixed(2)}</td>
+                    <td>R$ ${m.metaGerente.toFixed(2)}</td>
+                    <td>R$ ${m.metaDiretor.toFixed(2)}</td>
+                    <td>R$ ${m.metaAnalista.toFixed(2)}</td>
+                    <td>${m.usuario}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="carregarMetaParaEdicao('${m.mes}', '${m.loja}')"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="excluirHistoricoMeta(${i})"><i class="bi bi-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-        localStorage.setItem('dados', JSON.stringify(dados));
-        aplicarMetasNaTabela();
-        aplicarFiltro();
-        this.reset();
-    });
-
-    window.editarRegistro = function(id) {
-        const reg = dados.find(r => r.id === id);
-        if (!reg) return;
-        document.getElementById('editId').value = id;
-        document.getElementById('editLoja').value = reg.loja;
-        document.getElementById('editData').value = reg.data;
-        document.getElementById('editDiaSemana').value = reg.diaSemana;
-        document.getElementById('editRealizadoBruta').value = reg.realizadoBruta;
-        document.getElementById('editRealizadoLiquida').value = reg.realizadoLiquida;
-        document.getElementById('editClientes').value = reg.clientes;
-        document.getElementById('editForm').style.display = 'flex';
-    };
-
-    document.getElementById('editForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const id = parseInt(document.getElementById('editId').value);
-        const index = dados.findIndex(r => r.id === id);
-        if (index === -1) return;
-
-        dados[index] = {
-            ...dados[index],
-            loja: document.getElementById('editLoja').value,
-            data: document.getElementById('editData').value,
-            diaSemana: getDiaSemana(document.getElementById('editData').value),
-            realizadoBruta: parseFloat(document.getElementById('editRealizadoBruta').value),
-            realizadoLiquida: parseFloat(document.getElementById('editRealizadoLiquida').value),
-            clientes: parseInt(document.getElementById('editClientes').value)
+        window.excluirHistoricoMeta = function(idx) {
+            if (confirm('Excluir este registro do histórico?')) {
+                historicoMetas.splice(idx, 1);
+                localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
+                renderHistoricoMetas();
+            }
         };
 
-        localStorage.setItem('dados', JSON.stringify(dados));
-        aplicarMetasNaTabela();
-        aplicarFiltro();
-        this.style.display = 'none';
-    });
+        // === RELATÓRIO + EXCEL COM METAS ===
+        function abrirRelatorioVendas() {
+            const fim = new Date().toISOString().split('T')[0];
+            const inicio = new Date(); inicio.setDate(inicio.getDate() - 30);
+            document.getElementById('relatorioDataInicio').value = inicio.toISOString().split('T')[0];
+            document.getElementById('relatorioDataFim').value = fim;
+            new bootstrap.Modal(document.getElementById('relatorioVendasModal')).show();
+        }
 
-    window.excluirRegistro = function(id) {
-        if (confirm('Excluir este registro?')) {
-            dados = dados.filter(r => r.id !== id);
-            localStorage.setItem('dados', JSON.stringify(dados));
+        function gerarRelatorio() {
+            const inicio = document.getElementById('relatorioDataInicio').value;
+            const fim = document.getElementById('relatorioDataFim').value;
+            const loja = document.getElementById('relatorioLoja').value;
+            if (!inicio || !fim) return alert('Selecione as datas.');
+
+            dadosRelatorio = dados.filter(v => {
+                const d = new Date(v.data);
+                const i = new Date(inicio);
+                const f = new Date(fim); f.setDate(f.getDate() + 1);
+                return d >= i && d < f && (loja === 'TODAS' || v.loja === loja);
+            }).sort((a,b) => new Date(b.data) - new Date(a.data));
+
+            renderRelatorioVendas();
+            document.getElementById('btnExportarExcel').disabled = false;
+        }
+
+        function renderRelatorioVendas() {
+            const tbody = document.getElementById('relatorioVendasBody');
+            tbody.innerHTML = dadosRelatorio.length ? '' : '<tr><td colspan="14" class="text-center">Nenhum dado encontrado.</td></tr>';
+            dadosRelatorio.forEach(v => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${v.id}</td>
+                    <td>${v.loja}</td>
+                    <td>${v.data}</td>
+                    <td>${v.diaSemana}</td>
+                    <td>R$ ${v.metaBruta.toFixed(2)}</td>
+                    <td>R$ ${v.realizadoBruta.toFixed(2)}</td>
+                    <td>R$ ${v.diferencaBruta.toFixed(2)}</td>
+                    <td>R$ ${v.metaLiquida.toFixed(2)}</td>
+                    <td>R$ ${v.realizadoLiquida.toFixed(2)}</td>
+                    <td>R$ ${v.diferencaLiquida.toFixed(2)}</td>
+                    <td>${v.clientes}</td>
+                    <td>R$ ${(v.realizadoBruta / v.clientes || 0).toFixed(2)}</td>
+                    <td>${v.addedBy || 'N/A'}</td>
+                    <td>${v.dataHoraLancamento || 'N/A'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportarParaExcel() {
+            const dadosExcel = dadosRelatorio.map(v => ({
+                'ID': v.id, 'Loja': v.loja, 'Data': v.data, 'Dia': v.diaSemana,
+                'Meta Bruta': v.metaBruta, 'Real Bruta': v.realizadoBruta, 'Dif. Bruta': v.diferencaBruta,
+                'Meta Líq.': v.metaLiquida, 'Real Líq.': v.realizadoLiquida, 'Dif. Líq.': v.diferencaLiquida,
+                'Clientes': v.clientes, 'Ticket': (v.realizadoBruta / v.clientes || 0).toFixed(2),
+                'Usuário': v.addedBy || 'N/A', 'Lançamento': v.dataHoraLancamento || 'N/A'
+            }));
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(dadosExcel);
+            XLSX.utils.book_append_sheet(wb, ws, "Relatório");
+            XLSX.writeFile(wb, `relatorio_${new Date().toISOString().slice(0,10)}.xlsx`);
+        }
+
+        // === DEMAIS FUNÇÕES ===
+        function carregarMetaParaEdicao(mes, loja) {
+            const meta = metasMes.find(m => m.mes === mes && m.loja === loja);
+            if (!meta) return;
+            document.getElementById('metaMes').value = meta.mes;
+            document.getElementById('metaLoja').value = meta.loja;
+            document.getElementById('metaBruta').value = meta.metaBruta;
+            document.getElementById('metaLiquida').value = meta.metaLiquida;
+            document.getElementById('metaGerente').value = meta.metaGerente;
+            document.getElementById('metaDiretor').value = meta.metaDiretor;
+            document.getElementById('metaAnalista').value = meta.metaAnalista;
+            document.getElementById('btnEditarMeta').style.display = 'inline-block';
+            bootstrap.Modal.getInstance(document.getElementById('historicoMetasModal')).hide();
+            new bootstrap.Modal(document.getElementById('metasModal')).show();
+        }
+
+        function editarMetaExistente() {
+            const mes = document.getElementById('metaMes').value;
+            const loja = document.getElementById('metaLoja').value;
+            const index = metasMes.findIndex(m => m.mes === mes && m.loja === loja);
+            if (index === -1) return alert('Meta não encontrada!');
+            metasMes[index] = { ...metasMes[index],
+                metaBruta: parseFloat(document.getElementById('metaBruta').value),
+                metaLiquida: parseFloat(document.getElementById('metaLiquida').value),
+                metaGerente: parseFloat(document.getElementById('metaGerente').value) || 0,
+                metaDiretor: parseFloat(document.getElementById('metaDiretor').value) || 0,
+                metaAnalista: parseFloat(document.getElementById('metaAnalista').value) || 0
+            };
+            historicoMetas.push({ dataHora: new Date().toISOString(), ...metasMes[index], usuario: currentUser.username, acao: 'EDIÇÃO' });
+            localStorage.setItem('metasMes', JSON.stringify(metasMes));
+            localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
+            alert('Meta atualizada!');
+            bootstrap.Modal.getInstance(document.getElementById('metasModal')).hide();
+            limparFormularioMetas();
+            aplicarMetasNaTabela();
             aplicarFiltro();
         }
-    };
 
-    // INICIALIZAÇÃO
-    window.addEventListener('resize', checkScreenSize);
-    window.addEventListener('load', () => {
-        checkScreenSize();
-        preencherDiaSemana();
-        mostrarLogin();
-        atualizarCampoData();
-    });
-</script>
+        function limparFormularioMetas() {
+            document.getElementById('metasForm').reset();
+            document.getElementById('btnEditarMeta').style.display = 'none';
+        }
+
+        // === CRUD ===
+        document.getElementById('addForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const loja = document.getElementById('addLoja').value;
+            const data = document.getElementById('addData').value;
+            const bruta = parseFloat(document.getElementById('addRealizadoBruta').value);
+            const liquida = parseFloat(document.getElementById('addRealizadoLiquida').value);
+            const clientes = parseInt(document.getElementById('addClientes').value);
+            if (!loja || !data || isNaN(bruta) || isNaN(liquida) || isNaN(clientes)) return alert('Preencha todos os campos!');
+            dados.push({ id: nextId++, loja, data, diaSemana: getDiaSemana(data), realizadoBruta: bruta, realizadoLiquida: liquida, clientes, addedBy: currentUser.username, dataHoraLancamento: new Date().toLocaleString('pt-BR') });
+            localStorage.setItem('dados', JSON.stringify(dados));
+            aplicarMetasNaTabela();
+            aplicarFiltro();
+            e.target.reset();
+        });
+
+        window.editarRegistro = function(id) {
+            const r = dados.find(x => x.id === id);
+            if (!r) return;
+            document.getElementById('editId').value = id;
+            document.getElementById('editLoja').value = r.loja;
+            document.getElementById('editData').value = r.data;
+            document.getElementById('editDiaSemana').value = r.diaSemana;
+            document.getElementById('editRealizadoBruta').value = r.realizadoBruta;
+            document.getElementById('editRealizadoLiquida').value = r.realizadoLiquida;
+            document.getElementById('editClientes').value = r.clientes;
+            document.getElementById('editForm').style.display = 'flex';
+        };
+
+        document.getElementById('editForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('editId').value);
+            const idx = dados.findIndex(x => x.id === id);
+            if (idx === -1) return;
+            dados[idx] = { ...dados[idx],
+                loja: document.getElementById('editLoja').value,
+                data: document.getElementById('editData').value,
+                diaSemana: getDiaSemana(document.getElementById('editData').value),
+                realizadoBruta: parseFloat(document.getElementById('editRealizadoBruta').value),
+                realizadoLiquida: parseFloat(document.getElementById('editRealizadoLiquida').value),
+                clientes: parseInt(document.getElementById('editClientes').value)
+            };
+            localStorage.setItem('dados', JSON.stringify(dados));
+            aplicarMetasNaTabela();
+            aplicarFiltro();
+            e.target.style.display = 'none';
+        });
+
+        window.excluirRegistro = function(id) {
+            if (confirm('Excluir registro?')) {
+                dados = dados.filter(x => x.id !== id);
+                localStorage.setItem('dados', JSON.stringify(dados));
+                aplicarFiltro();
+            }
+        };
+
+        // === INICIALIZAÇÃO FINAL ===
+        window.addEventListener('resize', checkScreenSize);
+        window.addEventListener('load', () => {
+            checkScreenSize();
+            preencherDiaSemana();
+            mostrarLogin();
+            atualizarCampoData();
+        });
+    </script>
 </body>
 </html>
-
