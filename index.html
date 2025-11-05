@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+meu codigo esta com coim bug no login nao entra no sistema pode ajustar <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -11,84 +11,260 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
-            background-color: #f4f6f9;
+            background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             font-size: 14px;
         }
         #loginScreen {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #0d6efd, #0a58ca);
-            z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 15px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
         }
         #loginBox {
-            background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            width: 100%; max-width: 450px; text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 450px;
         }
         #app { display: none; }
         .sidebar {
-            min-height: 100vh; background-color: #ffffff; padding: 15px;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.08); position: fixed; z-index: 100; overflow-y: auto;
-            border-right: 1px solid #dee2e6;
+            min-height: 100vh;
+            background-color: #ffffff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: fixed;
+            z-index: 100;
+            overflow-y: auto;
         }
         .sidebar .nav-link {
-            color: #0d6efd; padding: 10px 12px; display: flex; align-items: center;
-            font-size: 0.9rem; border-radius: 8px; margin-bottom: 6px; transition: all 0.2s;
+            color: #0d6efd;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            margin-bottom: 5px;
         }
-        .sidebar .nav-link:hover { background-color: #e7f1ff; }
-        .sidebar .nav-link.active { background-color: #0d6efd; color: white !important; font-weight: 500; }
-        .sidebar .nav-link i { margin-right: 10px; font-size: 1.1rem; }
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: white !important;
+        }
+        .sidebar .nav-link i {
+            margin-right: 8px;
+            font-size: 1rem;
+        }
         .table th {
-            background-color: #0d6efd; color: white; font-size: 0.8rem; padding: 0.6rem; font-weight: 500;
+            background-color: #0d6efd;
+            color: white;
+            font-size: 0.8rem;
+            padding: 0.5rem;
         }
-        .table td { font-size: 0.85rem; padding: 0.5rem; vertical-align: middle; }
+        .table td {
+            font-size: 0.85rem;
+            padding: 0.5rem;
+            vertical-align: middle;
+        }
         .below-meta { background-color: #f8d7da !important; color: #721c24; }
-        .above-meta { background-color: #d4edda !important; color: #155724; }
-        .card { border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 18px; border: none; }
+        .above-meta { background-color: #d1e7dd !important; color: #155724; }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
         .chart-container {
-            width: 100%; margin: 20px auto; height: 320px; position: relative;
-            background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            width: 100%;
+            margin: 15px auto;
+            height: 300px;
+            position: relative;
         }
-        .btn-custom { background-color: #0d6efd; color: white; font-size: 0.9rem; border-radius: 8px; }
+        .btn-custom {
+            background-color: #0d6efd;
+            color: white;
+            font-size: 0.9rem;
+        }
         .btn-custom:hover { background-color: #0a58ca; }
-        .action-btns .btn { width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem; margin: 0 3px; border-radius: 6px; }
-        .form-row { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: end; }
-        .form-row > div { flex: 1 1 120px; min-width: 0; }
+        .action-btns .btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            margin: 0 2px;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: end;
+        }
+        .form-row > div {
+            flex: 1 1 120px;
+            min-width: 0;
+        }
         .form-row .col-clientes { flex: 0 0 90px; }
-        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .table td, .table th {
+            white-space: nowrap;
+        }
         .hidden { display: none; }
-        .btn-atualizar {
-            position: fixed; bottom: 20px; right: 20px; background: #28a745; color: white;
-            width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 99;
-            font-size: 1.3rem; animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); } }
+        .meta-ok { background-color: #d4edda !important; color: #155724; }
+        .meta-no { background-color: #f8d7da !important; color: #721c24; }
+       
+        /* Responsividade melhorada */
         @media (max-width: 768px) {
-            .sidebar { position: fixed; top: 0; left: -280px; width: 280px; transition: 0.3s ease; z-index: 1000; }
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                transition: 0.3s;
+                z-index: 1000;
+            }
             .sidebar.active { left: 0; }
-            .content { margin-left: 0; width: 100%; }
-            .form-row { flex-direction: column; }
-            .form-row > div { flex: 1 1 100%; }
-            .table th, .table td { padding: 0.4rem; font-size: 0.75rem; }
-            .chart-container { height: 260px; }
-            .btn-atualizar { bottom: 15px; right: 15px; width: 45px; height: 45px; font-size: 1.1rem; }
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            .form-row > div {
+                flex: 1 1 100%;
+                width: 100%;
+            }
+            .form-row .col-clientes {
+                flex: 1 1 100%;
+            }
+            .table th, .table td {
+                padding: 0.4rem;
+                font-size: 0.75rem;
+            }
+            .chart-container {
+                height: 250px;
+            }
+            .card-body {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .modal-dialog {
+                margin: 10px;
+            }
+            .modal-content {
+                padding: 10px;
+            }
         }
-        .toggle-btn { display: none; background-color: #0d6efd; color: white; border: none; padding: 10px; border-radius: 8px; position: fixed; top: 10px; left: 10px; z-index: 101; font-size: 1.2rem; }
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 99; }
-        .overlay.active { display: block; }
-        .form-control, .form-select { font-size: 0.9rem; border-radius: 8px; }
-        @media (max-width: 768px) { .form-control, .form-select { font-size: 16px; } }
-        .btn-relatorio { background-color: #28a745; color: white; border-radius: 8px; }
-        .btn-relatorio:hover { background-color: #218838; }
+       
+        @media (max-width: 576px) {
+            body {
+                font-size: 13px;
+            }
+            #loginBox {
+                padding: 1.5rem;
+            }
+            .sidebar {
+                width: 250px;
+                left: -250px;
+            }
+            .table th, .table td {
+                padding: 0.3rem;
+                font-size: 0.7rem;
+            }
+            .action-btns .btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+            .chart-container {
+                height: 200px;
+            }
+            .btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+       
+        .toggle-btn {
+            display: none;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 101;
+        }
+       
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+       
+        .overlay.active {
+            display: block;
+        }
+       
+        /* Ajustes para telas muito pequenas */
+        @media (max-width: 360px) {
+            .container-fluid {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+            .table-responsive {
+                font-size: 0.7rem;
+            }
+        }
+       
+        /* Melhorias para formulários em mobile */
+        .form-control, .form-select {
+            font-size: 0.9rem;
+        }
+       
+        @media (max-width: 768px) {
+            .form-control, .form-select {
+                font-size: 16px; /* Previne zoom no iOS */
+            }
+        }
+        /* Botão de relatório */
+        .btn-relatorio {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-relatorio:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
     <!-- TELA DE LOGIN -->
     <div id="loginScreen">
         <div id="loginBox">
-            <h3 class="mb-4">Login - Farmácia</h3>
+            <h3 class="text-center mb-4 text-primary">Login - Farmácia</h3>
             <form id="loginForm">
                 <div class="mb-3">
                     <label class="form-label">Usuário</label>
@@ -105,19 +281,21 @@
             </div>
         </div>
     </div>
-
     <!-- APLICATIVO -->
     <div id="app" class="container-fluid">
         <div class="row">
-            <button class="toggle-btn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+            <!-- Sidebar -->
+            <button class="toggle-btn" onclick="toggleSidebar()">
+                <i class="bi bi-filter-left"></i>
+            </button>
             <div class="overlay" onclick="toggleSidebar()"></div>
            
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
-                <h5 class="text-center mb-4 text-primary">Filtros</h5>
+                <h5 class="text-center mb-4">Filtros</h5>
                 <div class="list-group">
-                    <label class="list-group-item fw-bold">Lojas</label>
+                    <label class="list-group-item">Lojas</label>
                     <div id="lojasFiltros"></div>
-                    <label class="list-group-item fw-bold">Período</label>
+                    <label class="list-group-item">Período</label>
                     <select class="form-select mb-3" id="filtroPeriodo" onchange="atualizarCampoData()">
                         <option value="todos">Todos</option>
                         <option value="dia">Por Dia</option>
@@ -127,61 +305,113 @@
                         <label class="list-group-item">Data</label>
                         <input type="date" class="form-control mb-3" id="filtroData">
                     </div>
-                    <button class="btn btn-custom w-100 mb-3" onclick="aplicarFiltro()">Aplicar Filtro</button>
-
+                    <button class="btn btn-custom w-100" onclick="aplicarFiltro()">Aplicar Filtro</button>
+                    <!-- ADMINISTRAÇÃO -->
                     <div id="adminMenu" class="mt-4" style="display:none;">
-                        <label class="list-group-item fw-bold">Administração</label>
-                        <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#metasModal"><i class="bi bi-gear"></i> Calibragem de Metas</a>
-                        <a href="#" class="nav-link" id="linkTelaMetas" data-bs-toggle="modal" data-bs-target="#telaMetasModal"><i class="bi bi-graph-up"></i> Tela de Metas</a>
-                        <a href="#" class="nav-link" onclick="abrirHistoricoMetas()"><i class="bi bi-clock-history"></i> Histórico de Metas</a>
-                        <a href="#" class="nav-link" onclick="abrirRelatorioVendas()"><i class="bi bi-file-earmark-excel"></i> Relatório de Vendas</a>
-                        <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#userListModal"><i class="bi bi-people"></i> Gerenciar Usuários</a>
+                        <label class="list-group-item">Administração</label>
+                        <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#metasModal">
+                            <i class="bi bi-gear"></i> Calibragem de Metas
+                        </a>
+                        <a href="#" class="nav-link" id="linkTelaMetas" data-bs-toggle="modal" data-bs-target="#telaMetasModal">
+                            <i class="bi bi-graph-up"></i> Tela de Metas
+                        </a>
+                        <a href="#" class="nav-link" onclick="abrirHistoricoMetas()">
+                            <i class="bi bi-clock-history"></i> Histórico de Metas
+                        </a>
+                        <a href="#" class="nav-link" onclick="abrirRelatorioVendas()">
+                            <i class="bi bi-file-earmark-excel"></i> Relatório de Vendas
+                        </a>
+                        <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#userListModal">
+                            <i class="bi bi-people"></i> Gerenciar Usuários
+                        </a>
                     </div>
                 </div>
             </nav>
-
+            <!-- Main Content -->
             <main class="col-md-9 col-lg-10 content ms-auto">
                 <div class="container-fluid mt-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h1 class="text-primary mb-0">Gestão de Vendas</h1>
-                        <button class="btn btn-outline-primary btn-sm" onclick="aplicarFiltro()"><i class="bi bi-arrow-clockwise"></i> Atualizar</button>
-                    </div>
-                    <p class="text-center text-muted mb-4">Atualizado em <span id="currentDate"></span></p>
+                    <h1 class="text-center mb-3 text-primary">Gestão de Vendas - Farmácia</h1>
+                    <p class="text-center text-muted">Atualizado em <span id="currentDate"></span></p>
                     <div id="userInfo" class="text-end mb-3"></div>
-
                     <!-- CRUD -->
                     <div class="row mb-3">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header p-2">
                                     <ul class="nav nav-tabs card-header-tabs">
-                                        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#add">Adicionar</button></li>
-                                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#edit">Editar</button></li>
+                                        <li class="nav-item">
+                                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#add">Adicionar</button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#edit">Editar</button>
+                                        </li>
                                     </ul>
                                 </div>
-                                <div class="card-body p-3">
+                                <div class="card-body p-2">
                                     <div class="tab-content">
+                                        <!-- Adicionar -->
                                         <div class="tab-pane fade show active" id="add">
                                             <form id="addForm" class="form-row">
-                                                <div><label class="form-label small">Loja</label><select class="form-select form-select-sm" id="addLoja"></select></div>
-                                                <div><label class="form-label small">Data</label><input type="date" class="form-control form-control-sm" id="addData" required></div>
-                                                <div><label class="form-label small">Dia da Semana</label><select class="form-select form-select-sm" id="addDiaSemana"></select></div>
-                                                <div><label class="form-label small">Real. Bruta</label><input type="number" step="0.01" class="form-control form-control-sm" id="addRealizadoBruta" required></div>
-                                                <div><label class="form-label small">Real. Líquida</label><input type="number" step="0.01" class="form-control form-control-sm" id="addRealizadoLiquida" required></div>
-                                                <div class="col-clientes"><label class="form-label small">Clientes</label><input type="number" class="form-control form-control-sm" id="addClientes" required min="1"></div>
-                                                <div class="align-self-end"><button type="submit" class="btn btn-custom btn-sm">Adicionar</button></div>
+                                                <div>
+                                                    <label class="form-label small">Loja</label>
+                                                    <select class="form-select form-select-sm" id="addLoja"></select>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label small">Data</label>
+                                                    <input type="date" class="form-control form-control-sm" id="addData" required>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label small">Dia da Semana</label>
+                                                    <select class="form-select form-select-sm" id="addDiaSemana"></select>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label small">Real. Bruta</label>
+                                                    <input type="number" step="0.01" class="form-control form-control-sm" id="addRealizadoBruta" required>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label small">Real. Líquida</label>
+                                                    <input type="number" step="0.01" class="form-control form-control-sm" id="addRealizadoLiquida" required>
+                                                </div>
+                                                <div class="col-clientes">
+                                                    <label class="form-label small">Clientes</label>
+                                                    <input type="number" class="form-control form-control-sm" id="addClientes" required>
+                                                </div>
+                                                <div class="align-self-end">
+                                                    <button type="submit" class="btn btn-custom btn-sm">Adicionar</button>
+                                                </div>
                                             </form>
                                         </div>
+                                        <!-- Editar -->
                                         <div class="tab-pane fade" id="edit">
                                             <form id="editForm" class="form-row" style="display:none;">
                                                 <input type="hidden" id="editId">
-                                                <div><label class="form-label small">Loja</label><select class="form-select form-select-sm" id="editLoja"></select></div>
-                                                <div><label class="form-label small">Data</label><input type="date" class="form-control form-control-sm" id="editData"></div>
-                                                <div><label class="form-label small">Dia da Semana</label><select class="form-select form-select-sm" id="editDiaSemana"></select></div>
-                                                <div><label class="form-label small">Real. Bruta</label><input type="number" step="0.01" class="form-control form-control-sm" id="editRealizadoBruta"></div>
-                                                <div><label class="form-label small">Real. Líquida</label><input type="number" step="0.01" class="form-control form-control-sm" id="editRealizadoLiquida"></div>
-                                                <div class="col-clientes"><label class="form-label small">Clientes</label><input type="number" class="form-control form-control-sm" id="editClientes" min="1"></div>
-                                                <div class="align-self-end"><button type="submit" class="btn btn-custom btn-sm">Salvar</button></div>
+                                                <div>
+                                                    <label class="form-label small">Loja</label>
+                                                    <select class="form-select form-select-sm" id="editLoja"></select>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label small">Data</label>
+                                                    <input type="date" class="form-control form-control-sm" id="editData">
+                                                </div>
+                                                <div>
+                                                    <label class="form-label small">Dia da Semana</label>
+                                                    <select class="form-select form-select-sm" id="editDiaSemana"></select>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label small">Real. Bruta</label>
+                                                    <input type="number" step="0.01" class="form-control form-control-sm" id="editRealizadoBruta">
+                                                </div>
+                                                <div>
+                                                    <label class="form-label small">Real. Líquida</label>
+                                                    <input type="number" step="0.01" class="form-control form-control-sm" id="editRealizadoLiquida">
+                                                </div>
+                                                <div class="col-clientes">
+                                                    <label class="form-label small">Clientes</label>
+                                                    <input type="number" class="form-control form-control-sm" id="editClientes">
+                                                </div>
+                                                <div class="align-self-end">
+                                                    <button type="submit" class="btn btn-custom btn-sm">Salvar</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -189,7 +419,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- Tabela Principal -->
                     <div class="table-responsive">
                         <div id="tabelaContainer"></div>
                     </div>
@@ -200,10 +430,7 @@
             </main>
         </div>
     </div>
-
-    <button class="btn-atualizar" onclick="aplicarFiltro()" title="Atualizar Tabela"><i class="bi bi-arrow-repeat"></i></button>
-
-    <!-- MODAL RELATÓRIO -->
+    <!-- MODAL RELATÓRIO DE VENDAS -->
     <div class="modal fade" id="relatorioVendasModal" tabindex="-1">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -213,24 +440,49 @@
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
-                        <div class="col-md-4"><label class="form-label">Data Início</label><input type="date" class="form-control" id="relatorioDataInicio"></div>
-                        <div class="col-md-4"><label class="form-label">Data Fim</label><input type="date" class="form-control" id="relatorioDataFim"></div>
-                        <div class="col-md-4"><label class="form-label">Loja</label><select class="form-select" id="relatorioLoja"><option value="TODAS">Todas</option><option>Loja A</option><option>Loja B</option><option>Loja C</option></select></div>
+                        <div class="col-md-4">
+                            <label class="form-label">Data Início</label>
+                            <input type="date" class="form-control" id="relatorioDataInicio">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Data Fim</label>
+                            <input type="date" class="form-control" id="relatorioDataFim">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Loja</label>
+                            <select class="form-select" id="relatorioLoja">
+                                <option value="TODAS">Todas as Lojas</option>
+                                <option>Loja A</option>
+                                <option>Loja B</option>
+                                <option>Loja C</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <button class="btn btn-relatorio me-2" onclick="gerarRelatorio()">Gerar</button>
-                            <button class="btn btn-success" onclick="exportarParaExcel()" id="btnExportarExcel" disabled>Exportar Excel</button>
+                            <button class="btn btn-relatorio me-2" onclick="gerarRelatorio()">
+                                <i class="bi bi-search"></i> Gerar Relatório
+                            </button>
+                            <button class="btn btn-success" onclick="exportarParaExcel()" id="btnExportarExcel" disabled>
+                                <i class="bi bi-file-earmark-excel"></i> Exportar para Excel
+                            </button>
                         </div>
                     </div>
+                   
                     <div class="table-responsive">
                         <table class="table table-striped table-sm">
                             <thead class="table-primary">
                                 <tr>
-                                    <th>ID</th><th>Loja</th><th>Data</th><th>Dia</th>
-                                    <th>Meta Bruta</th><th>Real Bruta</th><th>Dif. Bruta</th>
-                                    <th>Meta Líq.</th><th>Real Líq.</th><th>Dif. Líq.</th>
-                                    <th>Clientes</th><th>Ticket</th><th>Usuário</th><th>Lançamento</th>
+                                    <th>ID</th>
+                                    <th>Loja</th>
+                                    <th>Data Venda</th>
+                                    <th>Dia Semana</th>
+                                    <th>Realizado Bruta</th>
+                                    <th>Realizado Líquida</th>
+                                    <th>Clientes</th>
+                                    <th>Ticket Médio</th>
+                                    <th>Usuário</th>
+                                    <th>Data/Hora Lançamento</th>
                                 </tr>
                             </thead>
                             <tbody id="relatorioVendasBody"></tbody>
@@ -240,8 +492,70 @@
             </div>
         </div>
     </div>
-
-    <!-- MODAL HISTÓRICO METAS -->
+    <!-- MODAL CALIBRAGEM -->
+    <div class="modal fade" id="metasModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Calibragem de Metas do Mês</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <button type="button" class="btn btn-outline-primary" onclick="carregarMetasExistentes()">
+                            <i class="bi bi-search"></i> Buscar Metas Existentes
+                        </button>
+                        <button type="button" class="btn btn-outline-info" onclick="limparFormularioMetas()">
+                            <i class="bi bi-plus-circle"></i> Nova Meta
+                        </button>
+                    </div>
+                   
+                    <form id="metasForm" class="row g-3">
+                        <input type="hidden" id="metaId">
+                        <div class="col-md-6">
+                            <label class="form-label">Mês</label>
+                            <input type="month" class="form-control" id="metaMes" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Loja</label>
+                            <select class="form-select" id="metaLoja" required>
+                                <option value="">Selecione...</option>
+                                <option value="TODAS">TODAS AS LOJAS</option>
+                                <option>Loja A</option><option>Loja B</option><option>Loja C</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Meta Bruta</label>
+                            <input type="number" step="0.01" class="form-control" id="metaBruta" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Meta Líquida</label>
+                            <input type="number" step="0.01" class="form-control" id="metaLiquida" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Meta Gerente</label>
+                            <input type="number" step="0.01" class="form-control" id="metaGerente">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Meta Diretor</label>
+                            <input type="number" step="0.01" class="form-control" id="metaDiretor">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Meta Analista</label>
+                            <input type="number" step="0.01" class="form-control" id="metaAnalista">
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-custom" onclick="gravarMetas()">Gravar Metas</button>
+                            <button type="button" class="btn btn-warning" onclick="editarMetaExistente()" id="btnEditarMeta" style="display:none;">
+                                <i class="bi bi-pencil"></i> Editar Meta
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL HISTÓRICO DE METAS -->
     <div class="modal fade" id="historicoMetasModal" tabindex="-1">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -254,10 +568,16 @@
                         <table class="table table-striped table-sm">
                             <thead class="table-primary">
                                 <tr>
-                                    <th>Data/Hora</th><th>Mês</th><th>Loja</th>
-                                    <th>Meta Bruta</th><th>Meta Líq.</th>
-                                    <th>Gerente</th><th>Diretor</th><th>Analista</th>
-                                    <th>Usuário</th><th>Ações</th>
+                                    <th>Data/Hora</th>
+                                    <th>Mês</th>
+                                    <th>Loja</th>
+                                    <th>Meta Bruta</th>
+                                    <th>Meta Líquida</th>
+                                    <th>Meta Gerente</th>
+                                    <th>Meta Diretor</th>
+                                    <th>Meta Analista</th>
+                                    <th>Usuário</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody id="historicoMetasBody"></tbody>
@@ -267,56 +587,30 @@
             </div>
         </div>
     </div>
-
-    <!-- MODAL CALIBRAGEM -->
-    <div class="modal fade" id="metasModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Calibragem de Metas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="metasForm" class="row g-3">
-                        <input type="hidden" id="metaId">
-                        <div class="col-md-6"><label class="form-label">Mês</label><input type="month" class="form-control" id="metaMes" required></div>
-                        <div class="col-md-6"><label class="form-label">Loja</label>
-                            <select class="form-select" id="metaLoja" required>
-                                <option value="">Selecione...</option>
-                                <option value="TODAS">TODAS AS LOJAS</option>
-                                <option>Loja A</option><option>Loja B</option><option>Loja C</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6"><label class="form-label">Meta Bruta</label><input type="number" step="0.01" class="form-control" id="metaBruta" required></div>
-                        <div class="col-md-6"><label class="form-label">Meta Líquida</label><input type="number" step="0.01" class="form-control" id="metaLiquida" required></div>
-                        <div class="col-md-4"><label class="form-label">Meta Gerente</label><input type="number" step="0.01" class="form-control" id="metaGerente"></div>
-                        <div class="col-md-4"><label class="form-label">Meta Diretor</label><input type="number" step="0.01" class="form-control" id="metaDiretor"></div>
-                        <div class="col-md-4"><label class="form-label">Meta Analista</label><input type="number" step="0.01" class="form-control" id="metaAnalista"></div>
-                        <div class="col-12">
-                            <button type="button" class="btn btn-custom" onclick="gravarMetas()">Gravar</button>
-                            <button type="button" class="btn btn-warning" onclick="editarMetaExistente()" id="btnEditarMeta" style="display:none;">Editar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL TELA DE METAS -->
+    <!-- TELA DE METAS -->
     <div class="modal fade" id="telaMetasModal" tabindex="-1">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tela de Metas</h5>
+                    <h5 class="modal-title">Tela de Metas - Colaboradores</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-sm">
+                        <table class="table table-striped table-sm">
                             <thead class="table-primary">
                                 <tr>
-                                    <th>Loja</th><th>Meta Bruta</th><th>Real. Bruta</th><th>%</th>
-                                    <th>Meta Líq.</th><th>Real. Líq.</th><th>%</th>
+                                    <th>Data</th>
+                                    <th>Loja</th>
+                                    <th>Real Bruta</th>
+                                    <th>Meta Bruta</th>
+                                    <th>Status</th>
+                                    <th>Real Líq.</th>
+                                    <th>Meta Líq.</th>
+                                    <th>Status</th>
+                                    <th>Gerente</th>
+                                    <th>Diretor</th>
+                                    <th>Analista</th>
                                 </tr>
                             </thead>
                             <tbody id="telaMetasBody"></tbody>
@@ -326,8 +620,7 @@
             </div>
         </div>
     </div>
-
-    <!-- MODAL USUÁRIOS -->
+    <!-- MODAL LISTA DE USUÁRIOS -->
     <div class="modal fade" id="userListModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -336,12 +629,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">Adicionar Usuário</button>
-                    </div>
+                    <button class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#userModal">
+                        Novo Usuário
+                    </button>
                     <div class="table-responsive">
-                        <table class="table table-striped table-sm">
-                            <thead><tr><th>Usuário</th><th>Função</th><th>Ações</th></tr></thead>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Usuário</th>
+                                    <th>Hierarquia</th>
+                                    <th>Loja(s)</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
                             <tbody id="userListBody"></tbody>
                         </table>
                     </div>
@@ -349,549 +649,526 @@
             </div>
         </div>
     </div>
-
-    <!-- MODAL ADICIONAR USUÁRIO -->
-    <div class="modal fade" id="addUserModal" tabindex="-1">
+    <!-- MODAL CADASTRO USUÁRIO -->
+    <div class="modal fade" id="userModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Adicionar Usuário</h5>
+                    <h5 class="modal-title">Cadastrar Usuário</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addUserForm">
-                        <div class="mb-3"><label>Usuário</label><input type="text" class="form-control" id="newUsername" required></div>
-                        <div class="mb-3"><label>Senha</label><input type="password" class="form-control" id="newPassword" required></div>
-                        <div class="mb-3"><label>Função</label>
-                            <select class="form-select" id="newRole">
-                                <option value="analista">Analista</option>
-                                <option value="gerente">Gerente</option>
+                    <form id="userForm">
+                        <div class="mb-3">
+                            <label class="form-label">Usuário</label>
+                            <input type="text" class="form-control" id="newUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Hierarquia</label>
+                            <select class="form-select" id="newRole" required>
                                 <option value="diretor">Diretor</option>
-                                <option value="ceo">CEO</option>
+                                <option value="gerente">Gerente</option>
+                                <option value="analista">Analista</option>
                             </select>
                         </div>
-                        <div class="mb-3" id="lojasGerente" style="display:none;">
-                            <label>Lojas</label>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" value="Loja A" id="lojaA"><label class="form-check-label" for="lojaA">Loja A</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" value="Loja B" id="lojaB"><label class="form-check-label" for="lojaB">Loja B</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" value="Loja C" id="lojaC"><label class="form-check-label" for="lojaC">Loja C</label></div>
+                        <div class="mb-3" id="storeDiv" style="display:none;">
+                            <label class="form-label">Loja(s) <small class="text-muted">(Ctrl + clique)</small></label>
+                            <select class="form-select" id="newStore" multiple size="3">
+                                <option>Loja A</option>
+                                <option>Loja B</option>
+                                <option>Loja C</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-custom">Salvar</button>
+                        <button type="submit" class="btn btn-custom w-100">Cadastrar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+   <script>
+    // VARIÁVEIS GLOBAIS
+    let dados = JSON.parse(localStorage.getItem('dados')) || [];
+    let metasMes = JSON.parse(localStorage.getItem('metasMes')) || [];
+    let historicoMetas = JSON.parse(localStorage.getItem('historicoMetas')) || [];
+    let users = JSON.parse(localStorage.getItem('users')) || [{username: 'admin', password: 'admin123', role: 'ceo'}];
+    let currentUser = null;
+    let nextId = dados.length > 0 ? Math.max(...dados.map(d => d.id)) + 1 : 1;
+    const todasLojas = ['Loja A', 'Loja B', 'Loja C'];
+    let dadosRelatorio = [];
 
-    <script>
-        let dados = JSON.parse(localStorage.getItem('dados')) || [];
-        let metasMes = JSON.parse(localStorage.getItem('metasMes')) || [];
-        let historicoMetas = JSON.parse(localStorage.getItem('historicoMetas')) || [];
-        let users = JSON.parse(localStorage.getItem('users')) || [{username: 'admin', password: 'admin123', role: 'ceo'}];
-        let currentUser = null;
-        let nextId = dados.length > 0 ? Math.max(...dados.map(d => d.id)) + 1 : 1;
-        const todasLojas = ['Loja A', 'Loja B', 'Loja C'];
-        let dadosRelatorio = [];
-        let chartInstance = null;
-
-        function preencherDiaSemana() {
-            const dias = ['segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado','domingo'];
-            ['addDiaSemana', 'editDiaSemana'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.innerHTML = dias.map(d => `<option value="${d}">${d}</option>`).join('');
-            });
-        }
-
-        function mostrarLogin() { document.getElementById('loginScreen').style.display = 'flex'; document.getElementById('app').style.display = 'none'; }
-        function atualizarCampoData() {
-            const periodo = document.getElementById('filtroPeriodo').value;
-            const dataDiv = document.getElementById('filtroDataDiv');
-            if (periodo === 'dia' || periodo === 'mes') {
-                dataDiv.style.display = 'block';
-                document.getElementById('filtroData').type = periodo === 'mes' ? 'month' : 'date';
-            } else dataDiv.style.display = 'none';
-        }
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.querySelector('.overlay');
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-        function setMaxDate() {
-            const today = new Date().toISOString().split('T')[0];
-            ['addData', 'editData'].forEach(id => {
-                const input = document.getElementById(id);
-                if (input) input.max = today;
-            });
-        }
-        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR');
-
-        function checkScreenSize() {
-            const toggleBtn = document.querySelector('.toggle-btn');
-            if (window.innerWidth < 768) toggleBtn.style.display = 'block';
-            else { toggleBtn.style.display = 'none'; document.getElementById('sidebar').classList.remove('active'); document.querySelector('.overlay').classList.remove('active'); }
-        }
-
-        // LOGIN
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('username').value.trim().toLowerCase();
-            const password = document.getElementById('password').value;
-            const user = users.find(u => u.username.toLowerCase() === username && u.password === password);
-            if (user) {
-                currentUser = { ...user };
-                if (user.role === 'gerente') currentUser.stores = user.stores || [];
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-                document.getElementById('userInfo').innerHTML = `Logado: ${currentUser.username} (${currentUser.role}) <button class="btn btn-sm btn-danger ms-2" onclick="logout()">Sair</button>`;
-                const adminMenu = document.getElementById('adminMenu');
-                if (['ceo', 'admin', 'diretor', 'gerente'].includes(currentUser.role)) adminMenu.style.display = 'block';
-                else adminMenu.style.display = 'none';
-                configurarLojasUsuario();
-                aplicarMetasNaTabela();
-                aplicarFiltro();
-                setMaxDate();
-                document.getElementById('loginForm').reset();
-            } else alert('Usuário ou senha inválidos.');
+    // FUNÇÕES DE INICIALIZAÇÃO
+    function preencherDiaSemana() {
+        const dias = ['segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado','domingo'];
+        ['addDiaSemana', 'editDiaSemana'].forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.innerHTML = dias.map(d => `<option value="${d}">${d}</option>`).join('');
+            }
         });
+    }
 
-        function logout() {
-            currentUser = null;
-            document.getElementById('app').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'flex';
+    function mostrarLogin() {
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('app').style.display = 'none';
+    }
+
+    function atualizarCampoData() {
+        const periodo = document.getElementById('filtroPeriodo').value;
+        const dataDiv = document.getElementById('filtroDataDiv');
+        if (periodo === 'dia' || periodo === 'mes') {
+            dataDiv.style.display = 'block';
+            document.getElementById('filtroData').type = periodo === 'mes' ? 'month' : 'date';
+        } else {
+            dataDiv.style.display = 'none';
+        }
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.querySelector('.overlay');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+
+    document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR');
+
+    function checkScreenSize() {
+        const toggleBtn = document.querySelector('.toggle-btn');
+        if (window.innerWidth < 768) {
+            toggleBtn.style.display = 'block';
+        } else {
+            toggleBtn.style.display = 'none';
+            document.getElementById('sidebar').classList.remove('active');
+            document.querySelector('.overlay').classList.remove('active');
+        }
+    }
+
+    // === CORRIGIDO: LOGIN AGORA FUNCIONA ===
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value.trim().toLowerCase();
+        const password = document.getElementById('password').value;
+
+        const user = users.find(u => u.username.toLowerCase() === username && u.password === password);
+        if (user) {
+            currentUser = { ...user };
+            if (user.role === 'gerente') currentUser.stores = user.stores || [];
+
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            document.getElementById('userInfo').innerHTML = `
+                Logado: ${currentUser.username} (${currentUser.role})
+                <button class="btn btn-sm btn-danger ms-2" onclick="logout()">Sair</button>
+            `;
+
+            const adminMenu = document.getElementById('adminMenu');
+            if (['ceo', 'admin', 'diretor', 'gerente'].includes(currentUser.role)) {
+                adminMenu.style.display = 'block';
+            } else {
+                adminMenu.style.display = 'none';
+            }
+
+            configurarLojasUsuario();
+            aplicarMetasNaTabela();
+            aplicarFiltro();
             document.getElementById('loginForm').reset();
+        } else {
+            alert('Usuário ou senha inválidos.');
         }
+    });
 
-        function configurarLojasUsuario() {
-            const lojasContainer = document.getElementById('lojasFiltros');
-            lojasContainer.innerHTML = '';
-            const lojasDisponiveis = currentUser.role === 'gerente' ? currentUser.stores || [] : todasLojas;
-            lojasDisponiveis.forEach(loja => {
-                lojasContainer.innerHTML += `<a href="#" class="nav-link" data-loja="${loja}">${loja}</a>`;
-            });
-            document.querySelectorAll('#lojasFiltros .nav-link').forEach(link => {
-                link.addEventListener('click', e => { e.preventDefault(); link.classList.toggle('active'); aplicarFiltro(); });
-            });
-            ['addLoja', 'editLoja'].forEach(id => {
-                const select = document.getElementById(id);
-                if (select) select.innerHTML = lojasDisponiveis.map(l => `<option value="${l}">${l}</option>`).join('');
-            });
-        }
+    function logout() {
+        currentUser = null;
+        document.getElementById('app').style.display = 'none';
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('loginForm').reset();
+    }
 
-        function getDiaSemana(dateStr) {
-            const dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
-            return dias[new Date(dateStr + 'T12:00:00').getDay()];
-        }
-
-        function aplicarMetasNaTabela() {
-            dados.forEach(registro => {
-                const mes = registro.data.slice(0, 7);
-                const metaEspecifica = metasMes.find(m => m.mes === mes && m.loja === registro.loja);
-                const metaGeral = metasMes.find(m => m.mes === mes && m.loja === 'TODAS');
-                const meta = metaEspecifica || metaGeral || { metaBruta: 0, metaLiquida: 0, metaGerente: 0, metaDiretor: 0, metaAnalista: 0 };
-                registro.metaBruta = meta.metaBruta;
-                registro.metaLiquida = meta.metaLiquida;
-                registro.metaGerente = meta.metaGerente || 0;
-                registro.metaDiretor = meta.metaDiretor || 0;
-                registro.metaAnalista = meta.metaAnalista || 0;
-                registro.diferencaBruta = registro.realizadoBruta - registro.metaBruta;
-                registro.diferencaLiquida = registro.realizadoLiquida - registro.metaLiquida;
-                registro.ticket = registro.realizadoBruta / registro.clientes || 0;
-            });
-            localStorage.setItem('dados', JSON.stringify(dados));
-        }
-
-        function aplicarFiltro() {
-            if (!currentUser) return;
-            const periodo = document.getElementById('filtroPeriodo').value;
-            const dataFiltro = document.getElementById('filtroData').value;
-            const lojasAtivas = Array.from(document.querySelectorAll('#lojasFiltros .nav-link.active')).map(l => l.dataset.loja);
-            let filtrados = dados.filter(row => {
-                if (currentUser.role === 'gerente' && !currentUser.stores.includes(row.loja)) return false;
-                if (currentUser.role === 'analista' && row.addedBy !== currentUser.username) return false;
-                if (lojasAtivas.length > 0 && !lojasAtivas.includes(row.loja)) return false;
-                if (periodo === 'dia' && dataFiltro && row.data !== dataFiltro) return false;
-                if (periodo === 'mes' && dataFiltro && row.data.slice(0, 7) !== dataFiltro.slice(0, 7)) return false;
-                return true;
-            });
-            renderTabela(filtrados);
-            renderTelaMetas(filtrados);
-            renderChart(filtrados);
-        }
-
-        function renderTabela(dadosFiltrados) {
-            let html = '<table class="table table-striped table-sm"><thead><tr><th>Loja</th><th>Data</th><th>Dia</th><th>Meta Bruta</th><th>Real. Bruta</th><th>Dif.</th><th>Meta Líq.</th><th>Real. Líq.</th><th>Dif.</th><th>Clientes</th><th>Ticket</th><th>Ações</th></tr></thead><tbody>';
-            dadosFiltrados.forEach(row => {
-                const classBruta = row.diferencaBruta < 0 ? 'below-meta' : 'above-meta';
-                const classLiquida = row.diferencaLiquida < 0 ? 'below-meta' : 'above-meta';
-                html += `<tr>
-                    <td>${row.loja}</td><td>${row.data}</td><td>${row.diaSemana}</td>
-                    <td>R$ ${row.metaBruta.toFixed(2)}</td>
-                    <td class="${classBruta}">R$ ${row.realizadoBruta.toFixed(2)}</td>
-                    <td>R$ ${row.diferencaBruta.toFixed(2)}</td>
-                    <td>R$ ${row.metaLiquida.toFixed(2)}</td>
-                    <td class="${classLiquida}">R$ ${row.realizadoLiquida.toFixed(2)}</td>
-                    <td>R$ ${row.diferencaLiquida.toFixed(2)}</td>
-                    <td>${row.clientes}</td><td>R$ ${row.ticket.toFixed(2)}</td>
-                    <td class="action-btns">
-                        <button class="btn btn-warning btn-sm" onclick="editarRegistro(${row.id})"><i class="bi bi-pencil"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirRegistro(${row.id})"><i class="bi bi-trash"></i></button>
-                    </td>
-                </tr>`;
-            });
-            html += '</tbody></table>';
-            document.getElementById('tabelaContainer').innerHTML = html;
-        }
-
-        function renderChart(dadosFiltrados) {
-            const ctx = document.getElementById('vendasChart').getContext('2d');
-            const labels = [...new Set(dadosFiltrados.map(d => d.data))].sort();
-            const datasets = todasLojas.map(loja => {
-                const data = labels.map(date => {
-                    const reg = dadosFiltrados.find(r => r.data === date && r.loja === loja);
-                    return reg ? reg.realizadoBruta : 0;
-                });
-                return { label: loja, data, borderColor: getRandomColor(), fill: false };
-            });
-
-            if (chartInstance) chartInstance.destroy();
-            chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: { labels, datasets },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) color += letters[Math.floor(Math.random() * 16)];
-            return color;
-        }
-
-        // CRUD
-        document.getElementById('addForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const loja = document.getElementById('addLoja').value;
-            const data = document.getElementById('addData').value;
-            const diaSemana = document.getElementById('addDiaSemana').value;
-            const realizadoBruta = parseFloat(document.getElementById('addRealizadoBruta').value);
-            const realizadoLiquida = parseFloat(document.getElementById('addRealizadoLiquida').value);
-            const clientes = parseInt(document.getElementById('addClientes').value);
-
-            if (!loja || !data || isNaN(realizadoBruta) || isNaN(realizadoLiquida) || isNaN(clientes)) {
-                alert('Preencha todos os campos corretamente!');
-                return;
-            }
-
-            const novo = {
-                id: nextId++,
-                loja, data, diaSemana, realizadoBruta, realizadoLiquida, clientes,
-                addedBy: currentUser.username,
-                dataHoraLancamento: new Date().toLocaleString('pt-BR')
-            };
-
-            dados.push(novo);
-            localStorage.setItem('dados', JSON.stringify(dados));
-            aplicarMetasNaTabela();
-            aplicarFiltro();
-            this.reset();
-            document.getElementById('addData').value = data;
+    function configurarLojasUsuario() {
+        const lojasContainer = document.getElementById('lojasFiltros');
+        lojasContainer.innerHTML = '';
+        const lojasDisponiveis = currentUser.role === 'gerente' ? currentUser.stores || [] : todasLojas;
+        lojasDisponiveis.forEach(loja => {
+            lojasContainer.innerHTML += `<a href="#" class="nav-link" data-loja="${loja}">${loja}</a>`;
         });
-
-        window.editarRegistro = function(id) {
-            const reg = dados.find(r => r.id === id);
-            if (!reg) return;
-            document.getElementById('editId').value = id;
-            document.getElementById('editLoja').value = reg.loja;
-            document.getElementById('editData').value = reg.data;
-            document.getElementById('editDiaSemana').value = reg.diaSemana;
-            document.getElementById('editRealizadoBruta').value = reg.realizadoBruta;
-            document.getElementById('editRealizadoLiquida').value = reg.realizadoLiquida;
-            document.getElementById('editClientes').value = reg.clientes;
-            document.getElementById('editForm').style.display = 'flex';
-        };
-
-        document.getElementById('editForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const id = parseInt(document.getElementById('editId').value);
-            const index = dados.findIndex(r => r.id === id);
-            if (index === -1) return;
-
-            dados[index] = {
-                ...dados[index],
-                loja: document.getElementById('editLoja').value,
-                data: document.getElementById('editData').value,
-                diaSemana: document.getElementById('editDiaSemana').value,
-                realizadoBruta: parseFloat(document.getElementById('editRealizadoBruta').value),
-                realizadoLiquida: parseFloat(document.getElementById('editRealizadoLiquida').value),
-                clientes: parseInt(document.getElementById('editClientes').value)
-            };
-
-            localStorage.setItem('dados', JSON.stringify(dados));
-            aplicarMetasNaTabela();
-            aplicarFiltro();
-            this.style.display = 'none';
-        });
-
-        window.excluirRegistro = function(id) {
-            if (confirm('Excluir este registro?')) {
-                dados = dados.filter(r => r.id !== id);
-                localStorage.setItem('dados', JSON.stringify(dados));
-                aplicarMetasNaTabela();
+        document.querySelectorAll('#lojasFiltros .nav-link').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                link.classList.toggle('active');
                 aplicarFiltro();
-            }
-        };
-
-        // METAS
-        function limparFormularioMetas() {
-            document.getElementById('metasForm').reset();
-            document.getElementById('btnEditarMeta').style.display = 'none';
-            document.getElementById('metaId').value = '';
-        }
-
-        window.carregarMetaParaEdicao = function(mes, loja) {
-            const meta = metasMes.find(m => m.mes === mes && m.loja === loja);
-            if (!meta) return;
-            document.getElementById('metaMes').value = meta.mes;
-            document.getElementById('metaLoja').value = meta.loja;
-            document.getElementById('metaBruta').value = meta.metaBruta;
-            document.getElementById('metaLiquida').value = meta.metaLiquida;
-            document.getElementById('metaGerente').value = meta.metaGerente;
-            document.getElementById('metaDiretor').value = meta.metaDiretor;
-            document.getElementById('metaAnalista').value = meta.metaAnalista;
-            document.getElementById('btnEditarMeta').style.display = 'inline-block';
-            bootstrap.Modal.getInstance(document.getElementById('historicoMetasModal')).hide();
-            new bootstrap.Modal(document.getElementById('metasModal')).show();
-        };
-
-        function editarMetaExistente() {
-            const mes = document.getElementById('metaMes').value;
-            const loja = document.getElementById('metaLoja').value;
-            const index = metasMes.findIndex(m => m.mes === mes && m.loja === loja);
-            if (index === -1) return alert('Meta não encontrada!');
-
-            metasMes[index] = {
-                ...metasMes[index],
-                metaBruta: parseFloat(document.getElementById('metaBruta').value),
-                metaLiquida: parseFloat(document.getElementById('metaLiquida').value),
-                metaGerente: parseFloat(document.getElementById('metaGerente').value) || 0,
-                metaDiretor: parseFloat(document.getElementById('metaDiretor').value) || 0,
-                metaAnalista: parseFloat(document.getElementById('metaAnalista').value) || 0
-            };
-
-            historicoMetas.push({
-                dataHora: new Date().toISOString(),
-                ...metasMes[index],
-                usuario: currentUser.username,
-                acao: 'EDIÇÃO'
             });
+        });
+        ['addLoja', 'editLoja'].forEach(id => {
+            const select = document.getElementById(id);
+            if (select) select.innerHTML = lojasDisponiveis.map(l => `<option value="${l}">${l}</option>`).join('');
+        });
+    }
 
-            localStorage.setItem('metasMes', JSON.stringify(metasMes));
-            localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
-            alert('Meta atualizada!');
-            bootstrap.Modal.getInstance(document.getElementById('metasModal')).hide();
-            limparFormularioMetas();
-            aplicarMetasNaTabela();
-            aplicarFiltro();
+    function getDiaSemana(dateStr) {
+        const dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+        return dias[new Date(dateStr + 'T12:00:00').getDay()];
+    }
+
+    function aplicarMetasNaTabela() {
+        dados.forEach(registro => {
+            const mes = registro.data.slice(0, 7);
+            const metaEspecifica = metasMes.find(m => m.mes === mes && m.loja === registro.loja);
+            const metaGeral = metasMes.find(m => m.mes === mes && m.loja === 'TODAS');
+            const meta = metaEspecifica || metaGeral || { metaBruta: 0, metaLiquida: 0, metaGerente: 0, metaDiretor: 0, metaAnalista: 0 };
+            registro.metaBruta = meta.metaBruta;
+            registro.metaLiquida = meta.metaLiquida;
+            registro.metaGerente = meta.metaGerente || 0;
+            registro.metaDiretor = meta.metaDiretor || 0;
+            registro.metaAnalista = meta.metaAnalista || 0;
+            registro.diferencaBruta = registro.realizadoBruta - registro.metaBruta;
+            registro.diferencaLiquida = registro.realizadoLiquida - registro.metaLiquida;
+            registro.ticket = registro.realizadoBruta / registro.clientes || 0;
+        });
+        localStorage.setItem('dados', JSON.stringify(dados));
+    }
+
+    function aplicarFiltro() {
+        if (!currentUser) return;
+        const periodo = document.getElementById('filtroPeriodo').value;
+        const dataFiltro = document.getElementById('filtroData').value;
+        const lojasAtivas = Array.from(document.querySelectorAll('#lojasFiltros .nav-link.active')).map(l => l.dataset.loja);
+        let filtrados = dados.filter(row => {
+            if (currentUser.role === 'gerente' && !currentUser.stores.includes(row.loja)) return false;
+            if (currentUser.role === 'analista' && row.addedBy !== currentUser.username) return false;
+            if (lojasAtivas.length > 0 && !lojasAtivas.includes(row.loja)) return false;
+            if (periodo === 'dia' && dataFiltro && row.data !== dataFiltro) return false;
+            if (periodo === 'mes' && dataFiltro && row.data.slice(0, 7) !== dataFiltro.slice(0, 7)) return false;
+            return true;
+        });
+        renderTabela(filtrados);
+        renderTelaMetas(filtrados);
+    }
+
+    function renderTabela(dadosFiltrados) {
+        let html = '<table class="table table-striped table-sm"><thead><tr><th>Loja</th><th>Data</th><th>Dia</th><th>Meta Bruta</th><th>Real. Bruta</th><th>Dif.</th><th>Meta Líq.</th><th>Real. Líq.</th><th>Dif.</th><th>Clientes</th><th>Ticket</th><th>Ações</th></tr></thead><tbody>';
+        dadosFiltrados.forEach(row => {
+            const classBruta = row.diferencaBruta < 0 ? 'below-meta' : 'above-meta';
+            const classLiquida = row.diferencaLiquida < 0 ? 'below-meta' : 'above-meta';
+            html += `<tr>
+                <td>${row.loja}</td>
+                <td>${row.data}</td>
+                <td>${row.diaSemana}</td>
+                <td>R$ ${row.metaBruta.toFixed(2)}</td>
+                <td class="${classBruta}">R$ ${row.realizadoBruta.toFixed(2)}</td>
+                <td>R$ ${row.diferencaBruta.toFixed(2)}</td>
+                <td>R$ ${row.metaLiquida.toFixed(2)}</td>
+                <td class="${classLiquida}">R$ ${row.realizadoLiquida.toFixed(2)}</td>
+                <td>R$ ${row.diferencaLiquida.toFixed(2)}</td>
+                <td>${row.clientes}</td>
+                <td>R$ ${row.ticket.toFixed(2)}</td>
+                <td class="action-btns">
+                    <button class="btn btn-warning btn-sm" onclick="editarRegistro(${row.id})"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirRegistro(${row.id})"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>`;
+        });
+        html += '</tbody></table>';
+        document.getElementById('tabelaContainer').innerHTML = html;
+    }
+
+    function renderTelaMetas(dadosFiltrados) {
+        const tbody = document.getElementById('telaMetasBody');
+        tbody.innerHTML = '';
+        dadosFiltrados.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.data}</td>
+                <td>${row.loja}</td>
+                <td>R$ ${row.realizadoBruta.toFixed(2)}</td>
+                <td>R$ ${row.metaBruta.toFixed(2)}</td>
+                <td class="${row.realizadoBruta >= row.metaBruta ? 'meta-ok' : 'meta-no'}">${row.realizadoBruta >= row.metaBruta ? 'OK' : 'Não'}</td>
+                <td>R$ ${row.realizadoLiquida.toFixed(2)}</td>
+                <td>R$ ${row.metaLiquida.toFixed(2)}</td>
+                <td class="${row.realizadoLiquida >= row.metaLiquida ? 'meta-ok' : 'meta-no'}">${row.realizadoLiquida >= row.metaLiquida ? 'OK' : 'Não'}</td>
+                <td class="${row.realizadoBruta >= row.metaGerente ? 'meta-ok' : 'meta-no'}">R$ ${row.metaGerente.toFixed(2)}</td>
+                <td class="${row.realizadoBruta >= row.metaDiretor ? 'meta-ok' : 'meta-no'}">R$ ${row.metaDiretor.toFixed(2)}</td>
+                <td class="${row.realizadoBruta >= row.metaAnalista ? 'meta-ok' : 'meta-no'}">R$ ${row.metaAnalista.toFixed(2)}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // === MELHORIA 1: GRAVAR METAS + ATUALIZA TABELA EM TEMPO REAL ===
+    function gravarMetas() {
+        if (!currentUser) { alert('Erro: Usuário não logado!'); mostrarLogin(); return; }
+        const metaMes = document.getElementById('metaMes').value;
+        const metaLoja = document.getElementById('metaLoja').value;
+        const metaBruta = parseFloat(document.getElementById('metaBruta').value);
+        const metaLiquida = parseFloat(document.getElementById('metaLiquida').value);
+        const metaGerente = parseFloat(document.getElementById('metaGerente').value) || 0;
+        const metaDiretor = parseFloat(document.getElementById('metaDiretor').value) || 0;
+        const metaAnalista = parseFloat(document.getElementById('metaAnalista').value) || 0;
+
+        if (!metaMes || !metaLoja || isNaN(metaBruta) || isNaN(metaLiquida)) {
+            alert('Preencha os campos obrigatórios!');
+            return;
         }
 
-        function gravarMetas() {
-            const mes = document.getElementById('metaMes').value;
-            const loja = document.getElementById('metaLoja').value;
-            const bruta = parseFloat(document.getElementById('metaBruta').value);
-            const liquida = parseFloat(document.getElementById('metaLiquida').value);
-            if (!mes || !loja || isNaN(bruta) || isNaN(liquida)) return alert('Preencha os campos!');
+        const index = metasMes.findIndex(m => m.mes === metaMes && m.loja === metaLoja);
+        const novaMeta = { id: Date.now().toString(), mes: metaMes, loja: metaLoja, metaBruta, metaLiquida, metaGerente, metaDiretor, metaAnalista };
 
-            const index = metasMes.findIndex(m => m.mes === mes && m.loja === loja);
-            const nova = { id: Date.now().toString(), mes, loja, metaBruta: bruta, metaLiquida: liquida,
-                metaGerente: parseFloat(document.getElementById('metaGerente').value) || 0,
-                metaDiretor: parseFloat(document.getElementById('metaDiretor').value) || 0,
-                metaAnalista: parseFloat(document.getElementById('metaAnalista').value) || 0 };
+        if (index !== -1) metasMes[index] = novaMeta;
+        else metasMes.push(novaMeta);
 
-            if (index !== -1) metasMes[index] = nova; else metasMes.push(nova);
+        historicoMetas.push({ 
+            dataHora: new Date().toISOString(), 
+            ...novaMeta, 
+            usuario: currentUser.username, 
+            acao: index !== -1 ? 'ATUALIZAÇÃO' : 'CRIAÇÃO' 
+        });
 
-            historicoMetas.push({ dataHora: new Date().toISOString(), ...nova, usuario: currentUser.username, acao: index !== -1 ? 'ATUALIZAÇÃO' : 'CRIAÇÃO' });
-            localStorage.setItem('metasMes', JSON.stringify(metasMes));
+        localStorage.setItem('metasMes', JSON.stringify(metasMes));
+        localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
+
+        alert('Metas salvas com sucesso!');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('metasModal'));
+        if (modal) modal.hide();
+        limparFormularioMetas();
+
+        aplicarMetasNaTabela();
+        aplicarFiltro(); // ATUALIZA TABELA EM TEMPO REAL
+    }
+
+    // === MELHORIA 2: HISTÓRICO COM BOTÃO EXCLUIR ===
+    function renderHistoricoMetas() {
+        const tbody = document.getElementById('historicoMetasBody');
+        tbody.innerHTML = '';
+        [...historicoMetas].sort((a,b) => new Date(b.dataHora) - new Date(a.dataHora)).forEach((meta, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${new Date(meta.dataHora).toLocaleString('pt-BR')}</td>
+                <td>${meta.mes}</td>
+                <td>${meta.loja}</td>
+                <td>R$ ${meta.metaBruta.toFixed(2)}</td>
+                <td>R$ ${meta.metaLiquida.toFixed(2)}</td>
+                <td>R$ ${meta.metaGerente.toFixed(2)}</td>
+                <td>R$ ${meta.metaDiretor.toFixed(2)}</td>
+                <td>R$ ${meta.metaAnalista.toFixed(2)}</td>
+                <td>${meta.usuario}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" onclick="carregarMetaParaEdicao('${meta.mes}', '${meta.loja}')"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirHistoricoMeta(${idx})"><i class="bi bi-trash"></i></button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    window.excluirHistoricoMeta = function(idx) {
+        if (confirm('Excluir este registro do histórico?')) {
+            historicoMetas.splice(idx, 1);
             localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
-            alert('Meta salva!');
-            bootstrap.Modal.getInstance(document.getElementById('metasModal')).hide();
-            limparFormularioMetas();
-            aplicarMetasNaTabela();
-            aplicarFiltro();
-        }
-
-        // HISTÓRICO
-        function abrirHistoricoMetas() {
             renderHistoricoMetas();
-            new bootstrap.Modal(document.getElementById('historicoMetasModal')).show();
         }
+    };
 
-        function renderHistoricoMetas() {
-            const tbody = document.getElementById('historicoMetasBody');
-            tbody.innerHTML = '';
-            [...historicoMetas].sort((a,b) => new Date(b.dataHora) - new Date(a.dataHora)).forEach((meta, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${new Date(meta.dataHora).toLocaleString('pt-BR')}</td>
-                    <td>${meta.mes}</td><td>${meta.loja}</td>
-                    <td>R$ ${meta.metaBruta.toFixed(2)}</td><td>R$ ${meta.metaLiquida.toFixed(2)}</td>
-                    <td>R$ ${meta.metaGerente.toFixed(2)}</td><td>R$ ${meta.metaDiretor.toFixed(2)}</td><td>R$ ${meta.metaAnalista.toFixed(2)}</td>
-                    <td>${meta.usuario}</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" onclick="carregarMetaParaEdicao('${meta.mes}', '${meta.loja}')">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirHistoricoMeta(${idx})">Excluir</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
+    // === MELHORIA 3: RELATÓRIO COM METAS + EXCEL ===
+    function renderRelatorioVendas() {
+        const tbody = document.getElementById('relatorioVendasBody');
+        tbody.innerHTML = '';
+        if (dadosRelatorio.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="14" class="text-center">Nenhum dado encontrado.</td></tr>';
+            return;
         }
+        dadosRelatorio.forEach(v => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${v.id}</td>
+                <td>${v.loja}</td>
+                <td>${v.data}</td>
+                <td>${v.diaSemana}</td>
+                <td>R$ ${v.metaBruta.toFixed(2)}</td>
+                <td>R$ ${v.realizadoBruta.toFixed(2)}</td>
+                <td>R$ ${v.diferencaBruta.toFixed(2)}</td>
+                <td>R$ ${v.metaLiquida.toFixed(2)}</td>
+                <td>R$ ${v.realizadoLiquida.toFixed(2)}</td>
+                <td>R$ ${v.diferencaLiquida.toFixed(2)}</td>
+                <td>${v.clientes}</td>
+                <td>R$ ${(v.realizadoBruta / v.clientes || 0).toFixed(2)}</td>
+                <td>${v.addedBy || 'N/A'}</td>
+                <td>${v.dataHoraLancamento || 'N/A'}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
 
-        window.excluirHistoricoMeta = function(idx) {
-            if (confirm('Excluir este registro do histórico?')) {
-                historicoMetas.splice(idx, 1);
-                localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
-                renderHistoricoMetas();
-            }
+    function exportarParaExcel() {
+        const dadosExcel = dadosRelatorio.map(v => ({
+            'ID': v.id,
+            'Loja': v.loja,
+            'Data': v.data,
+            'Dia': v.diaSemana,
+            'Meta Bruta': v.metaBruta,
+            'Real Bruta': v.realizadoBruta,
+            'Dif. Bruta': v.diferencaBruta,
+            'Meta Líq.': v.metaLiquida,
+            'Real Líq.': v.realizadoLiquida,
+            'Dif. Líq.': v.diferencaLiquida,
+            'Clientes': v.clientes,
+            'Ticket': (v.realizadoBruta / v.clientes || 0).toFixed(2),
+            'Usuário': v.addedBy || 'N/A',
+            'Lançamento': v.dataHoraLancamento || 'N/A'
+        }));
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(dadosExcel);
+        XLSX.utils.book_append_sheet(wb, ws, "Relatório");
+        XLSX.writeFile(wb, `relatorio_${new Date().toISOString().slice(0,10)}.xlsx`);
+    }
+
+    // === OUTRAS FUNÇÕES (mantidas com pequenas correções) ===
+    function abrirRelatorioVendas() {
+        const dataFim = new Date().toISOString().split('T')[0];
+        const dataInicio = new Date(); dataInicio.setDate(dataInicio.getDate() - 30);
+        document.getElementById('relatorioDataInicio').value = dataInicio.toISOString().split('T')[0];
+        document.getElementById('relatorioDataFim').value = dataFim;
+        new bootstrap.Modal(document.getElementById('relatorioVendasModal')).show();
+    }
+
+    function gerarRelatorio() {
+        const inicio = document.getElementById('relatorioDataInicio').value;
+        const fim = document.getElementById('relatorioDataFim').value;
+        const loja = document.getElementById('relatorioLoja').value;
+        if (!inicio || !fim) return alert('Selecione as datas.');
+        dadosRelatorio = dados.filter(v => {
+            const data = new Date(v.data);
+            const i = new Date(inicio); const f = new Date(fim); f.setDate(f.getDate() + 1);
+            return data >= i && data < f && (loja === 'TODAS' || v.loja === loja);
+        }).sort((a,b) => new Date(b.data) - new Date(a.data));
+        renderRelatorioVendas();
+        document.getElementById('btnExportarExcel').disabled = false;
+    }
+
+    function carregarMetaParaEdicao(mes, loja) {
+        const meta = metasMes.find(m => m.mes === mes && m.loja === loja);
+        if (!meta) return;
+        document.getElementById('metaMes').value = meta.mes;
+        document.getElementById('metaLoja').value = meta.loja;
+        document.getElementById('metaBruta').value = meta.metaBruta;
+        document.getElementById('metaLiquida').value = meta.metaLiquida;
+        document.getElementById('metaGerente').value = meta.metaGerente;
+        document.getElementById('metaDiretor').value = meta.metaDiretor;
+        document.getElementById('metaAnalista').value = meta.metaAnalista;
+        document.getElementById('btnEditarMeta').style.display = 'inline-block';
+        bootstrap.Modal.getInstance(document.getElementById('historicoMetasModal')).hide();
+        new bootstrap.Modal(document.getElementById('metasModal')).show();
+    }
+
+    function editarMetaExistente() {
+        const mes = document.getElementById('metaMes').value;
+        const loja = document.getElementById('metaLoja').value;
+        const index = metasMes.findIndex(m => m.mes === mes && m.loja === loja);
+        if (index === -1) return alert('Meta não encontrada!');
+        metasMes[index] = {
+            ...metasMes[index],
+            metaBruta: parseFloat(document.getElementById('metaBruta').value),
+            metaLiquida: parseFloat(document.getElementById('metaLiquida').value),
+            metaGerente: parseFloat(document.getElementById('metaGerente').value) || 0,
+            metaDiretor: parseFloat(document.getElementById('metaDiretor').value) || 0,
+            metaAnalista: parseFloat(document.getElementById('metaAnalista').value) || 0
         };
+        historicoMetas.push({ dataHora: new Date().toISOString(), ...metasMes[index], usuario: currentUser.username, acao: 'EDIÇÃO' });
+        localStorage.setItem('metasMes', JSON.stringify(metasMes));
+        localStorage.setItem('historicoMetas', JSON.stringify(historicoMetas));
+        alert('Meta atualizada!');
+        bootstrap.Modal.getInstance(document.getElementById('metasModal')).hide();
+        limparFormularioMetas();
+        aplicarMetasNaTabela();
+        aplicarFiltro();
+    }
 
-        // RELATÓRIO
-        function abrirRelatorioVendas() {
-            new bootstrap.Modal(document.getElementById('relatorioVendasModal')).show();
+    function limparFormularioMetas() {
+        document.getElementById('metasForm').reset();
+        document.getElementById('btnEditarMeta').style.display = 'none';
+    }
+
+    // CRUD
+    document.getElementById('addForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const loja = document.getElementById('addLoja').value;
+        const data = document.getElementById('addData').value;
+        const realizadoBruta = parseFloat(document.getElementById('addRealizadoBruta').value);
+        const realizadoLiquida = parseFloat(document.getElementById('addRealizadoLiquida').value);
+        const clientes = parseInt(document.getElementById('addClientes').value);
+
+        if (!loja || !data || isNaN(realizadoBruta) || isNaN(realizadoLiquida) || isNaN(clientes)) {
+            alert('Preencha todos os campos!');
+            return;
         }
 
-        function gerarRelatorio() {
-            const inicio = document.getElementById('relatorioDataInicio').value;
-            const fim = document.getElementById('relatorioDataFim').value;
-            const loja = document.getElementById('relatorioLoja').value;
-            if (!inicio || !fim) return alert('Selecione as datas.');
-            dadosRelatorio = dados.filter(v => {
-                const data = new Date(v.data);
-                const i = new Date(inicio); const f = new Date(fim); f.setDate(f.getDate() + 1);
-                return data >= i && data < f && (loja === 'TODAS' || v.loja === loja);
-            }).sort((a,b) => new Date(b.data) - new Date(a.data));
-            renderRelatorioVendas();
-            document.getElementById('btnExportarExcel').disabled = false;
-        }
-
-        function renderRelatorioVendas() {
-            const tbody = document.getElementById('relatorioVendasBody');
-            tbody.innerHTML = '';
-            dadosRelatorio.forEach(v => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${v.id}</td><td>${v.loja}</td><td>${v.data}</td><td>${v.diaSemana}</td>
-                    <td>R$ ${v.metaBruta.toFixed(2)}</td><td>R$ ${v.realizadoBruta.toFixed(2)}</td><td>R$ ${v.diferencaBruta.toFixed(2)}</td>
-                    <td>R$ ${v.metaLiquida.toFixed(2)}</td><td>R$ ${v.realizadoLiquida.toFixed(2)}</td><td>R$ ${v.diferencaLiquida.toFixed(2)}</td>
-                    <td>${v.clientes}</td><td>R$ ${(v.realizadoBruta / v.clientes || 0).toFixed(2)}</td>
-                    <td>${v.addedBy || 'N/A'}</td><td>${v.dataHoraLancamento || 'N/A'}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function exportarParaExcel() {
-            const dadosExcel = dadosRelatorio.map(v => ({
-                'ID': v.id, 'Loja': v.loja, 'Data': v.data, 'Dia': v.diaSemana,
-                'Meta Bruta': v.metaBruta, 'Real Bruta': v.realizadoBruta, 'Dif. Bruta': v.diferencaBruta,
-                'Meta Líq.': v.metaLiquida, 'Real Líq.': v.realizadoLiquida, 'Dif. Líq.': v.diferencaLiquida,
-                'Clientes': v.clientes, 'Ticket': (v.realizadoBruta / v.clientes || 0),
-                'Usuário': v.addedBy || 'N/A', 'Lançamento': v.dataHoraLancamento || 'N/A'
-            }));
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.json_to_sheet(dadosExcel);
-            XLSX.utils.book_append_sheet(wb, ws, "Relatório");
-            XLSX.writeFile(wb, `relatorio_${new Date().toISOString().slice(0,10)}.xlsx`);
-        }
-
-        // TELA DE METAS
-        function renderTelaMetas(dadosFiltrados) {
-            const mesAtual = new Date().toISOString().slice(0,7);
-            const metasAtuais = {};
-            todasLojas.forEach(loja => {
-                const metaEspecifica = metasMes.find(m => m.mes === mesAtual && m.loja === loja);
-                const metaGeral = metasMes.find(m => m.mes === mesAtual && m.loja === 'TODAS');
-                const meta = metaEspecifica || metaGeral || { metaBruta: 0, metaLiquida: 0 };
-                metasAtuais[loja] = { metaBruta: meta.metaBruta, metaLiquida: meta.metaLiquida };
-            });
-
-            const vendasPorLoja = todasLojas.reduce((acc, loja) => {
-                acc[loja] = { bruta: 0, liquida: 0 };
-                return acc;
-            }, {});
-
-            dadosFiltrados.filter(d => d.data.startsWith(mesAtual)).forEach(d => {
-                vendasPorLoja[d.loja].bruta += d.realizadoBruta;
-                vendasPorLoja[d.loja].liquida += d.realizadoLiquida;
-            });
-
-            const tbody = document.getElementById('telaMetasBody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            todasLojas.forEach(loja => {
-                const meta = metasAtuais[loja];
-                const real = vendasPorLoja[loja];
-                const percBruta = meta.metaBruta > 0 ? (real.bruta / meta.metaBruta * 100).toFixed(1) : '0.0';
-                const percLiquida = meta.metaLiquida > 0 ? (real.liquida / meta.metaLiquida * 100).toFixed(1) : '0.0';
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${loja}</td>
-                    <td>R$ ${meta.metaBruta.toFixed(2)}</td><td>R$ ${real.bruta.toFixed(2)}</td><td>${percBruta}%</td>
-                    <td>R$ ${meta.metaLiquida.toFixed(2)}</td><td>R$ ${real.liquida.toFixed(2)}</td><td>${percLiquida}%</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // USUÁRIOS
-        document.getElementById('newRole').addEventListener('change', function() {
-            document.getElementById('lojasGerente').style.display = this.value === 'gerente' ? 'block' : 'none';
+        dados.push({
+            id: nextId++,
+            loja, data, diaSemana: getDiaSemana(data),
+            realizadoBruta, realizadoLiquida, clientes,
+            addedBy: currentUser.username,
+            dataHoraLancamento: new Date().toLocaleString('pt-BR')
         });
 
-        document.getElementById('addUserForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('newUsername').value.trim();
-            const password = document.getElementById('newPassword').value;
-            const role = document.getElementById('newRole').value;
-            if (users.some(u => u.username === username)) return alert('Usuário já existe!');
+        localStorage.setItem('dados', JSON.stringify(dados));
+        aplicarMetasNaTabela();
+        aplicarFiltro();
+        this.reset();
+    });
 
-            const newUser = { username, password, role };
-            if (role === 'gerente') {
-                newUser.stores = [];
-                ['lojaA', 'lojaB', 'lojaC'].forEach(id => {
-                    if (document.getElementById(id).checked) newUser.stores.push(document.getElementById(id).value);
-                });
-            }
+    window.editarRegistro = function(id) {
+        const reg = dados.find(r => r.id === id);
+        if (!reg) return;
+        document.getElementById('editId').value = id;
+        document.getElementById('editLoja').value = reg.loja;
+        document.getElementById('editData').value = reg.data;
+        document.getElementById('editDiaSemana').value = reg.diaSemana;
+        document.getElementById('editRealizadoBruta').value = reg.realizadoBruta;
+        document.getElementById('editRealizadoLiquida').value = reg.realizadoLiquida;
+        document.getElementById('editClientes').value = reg.clientes;
+        document.getElementById('editForm').style.display = 'flex';
+    };
 
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-            bootstrap.Modal.getInstance(document.getElementById('addUserModal')).hide();
-            renderUserList();
-        });
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = parseInt(document.getElementById('editId').value);
+        const index = dados.findIndex(r => r.id === id);
+        if (index === -1) return;
 
-        function renderUserList() {
-            const tbody = document.getElementById('userListBody');
-            tbody.innerHTML = '';
-            users.forEach((u, i) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${u.username}</td><td>${u.role}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="excluirUsuario(${i})">Excluir</button></td>`;
-                tbody.appendChild(tr);
-            });
-        }
-
-        window.excluirUsuario = function(i) {
-            if (confirm('Excluir usuário?')) {
-                users.splice(i, 1);
-                localStorage.setItem('users', JSON.stringify(users));
-                renderUserList();
-            }
+        dados[index] = {
+            ...dados[index],
+            loja: document.getElementById('editLoja').value,
+            data: document.getElementById('editData').value,
+            diaSemana: getDiaSemana(document.getElementById('editData').value),
+            realizadoBruta: parseFloat(document.getElementById('editRealizadoBruta').value),
+            realizadoLiquida: parseFloat(document.getElementById('editRealizadoLiquida').value),
+            clientes: parseInt(document.getElementById('editClientes').value)
         };
 
-        document.querySelector('[data-bs-target="#userListModal"]').addEventListener('click', renderUserList);
+        localStorage.setItem('dados', JSON.stringify(dados));
+        aplicarMetasNaTabela();
+        aplicarFiltro();
+        this.style.display = 'none';
+    });
 
-        window.addEventListener('resize', checkScreenSize);
-        window.addEventListener('load', () => { checkScreenSize(); preencherDiaSemana(); mostrarLogin(); atualizarCampoData(); setMaxDate(); });
-    </script>
+    window.excluirRegistro = function(id) {
+        if (confirm('Excluir este registro?')) {
+            dados = dados.filter(r => r.id !== id);
+            localStorage.setItem('dados', JSON.stringify(dados));
+            aplicarFiltro();
+        }
+    };
+
+    // INICIALIZAÇÃO
+    window.addEventListener('resize', checkScreenSize);
+    window.addEventListener('load', () => {
+        checkScreenSize();
+        preencherDiaSemana();
+        mostrarLogin();
+        atualizarCampoData();
+    });
+</script>
 </body>
 </html>
