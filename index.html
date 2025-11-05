@@ -710,9 +710,239 @@
         let historicoMetas = JSON.parse(localStorage.getItem('historicoMetas')) || [];
         let users = JSON.parse(localStorage.getItem('users')) || [{username: 'admin', password: 'admin123', role: 'ceo'}];
         let currentUser = null;
-        let nextId = dados.length > 0 ? Math.max(...dados.map(d => d.id)) + 1 : 0;
+        let nextId = dados.length > 0 ? Math.max(...dados.map(d => d.id)) + 1 : 1;
         const todasLojas = ['Loja A', 'Loja B', 'Loja C'];
         let dadosRelatorio = [];
+
+        // FUNÇÕES DE INICIALIZAÇÃO
+        function preencherDiaSemana() {
+            const dias = ['segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado','domingo'];
+            ['addDiaSemana', 'editDiaSemana'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerHTML = dias.map(d => `<option value="${d}">${d}</option>`).join('');
+                }
+            });
+        }
+
+        function mostrarLogin() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('app').style.display = 'none';
+        }
+
+        function atualizarCampoData() {
+            const periodo = document.getElementById('filtroPeriodo').value;
+            const dataDiv = document.getElementById('filtroDataDiv');
+            if (periodo === 'dia' || periodo === 'mes') {
+                dataDiv.style.display = 'block';
+                if (periodo === 'mes') {
+                    document.getElementById('filtroData').type = 'month';
+                } else {
+                    document.getElementById('filtroData').type = 'date';
+                }
+            } else {
+                dataDiv.style.display = 'none';
+            }
+        }
+
+        // FUNÇÃO PARA TOGGLE DA SIDEBAR
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // ATUALIZAR DATA ATUAL
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR');
+
+        // MOSTRAR/OCULTAR BOTÃO TOGGLE
+        function checkScreenSize() {
+            const toggleBtn = document.querySelector('.toggle-btn');
+            if (window.innerWidth < 768) {
+                toggleBtn.style.display = 'block';
+            } else {
+                toggleBtn.style.display = 'none';
+                document.getElementById('sidebar').classList.remove('active');
+                document.querySelector('.overlay').classList.remove('active');
+            }
+        }
+
+        // FUNÇÃO DE LOGIN
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            if (user) {
+                currentUser = { ...user };
+                if (user.role === 'gerente') currentUser.stores = user.stores || [];
+                
+                // Entrar no sistema
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+                document.getElementById('userInfo').innerHTML = `
+                    Logado: ${currentUser.username} (${currentUser.role}) 
+                    <button class="btn btn-sm btn-danger ms-2" onclick="logout()">Sair</button>
+                `;
+
+                const adminMenu = document.getElementById('adminMenu');
+                const linkTelaMetas = document.getElementById('linkTelaMetas');
+                if (['ceo', 'admin', 'diretor', 'gerente'].includes(currentUser.role)) {
+                    adminMenu.style.display = 'block';
+                    linkTelaMetas.style.display = currentUser.role === 'analista' ? 'none' : 'block';
+                } else {
+                    adminMenu.style.display = 'none';
+                }
+
+                configurarLojasUsuario();
+                aplicarMetasNaTabela();
+                aplicarFiltro();
+                
+                // Fechar sidebar em mobile após login
+                if (window.innerWidth < 768) {
+                    toggleSidebar();
+                }
+            } else {
+                alert('Usuário ou senha inválidos.');
+            }
+        });
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('loginForm').reset();
+            document.querySelectorAll('.modal').forEach(m => {
+                const modal = bootstrap.Modal.getInstance(m);
+                if (modal) modal.hide();
+            });
+        }
+
+        function configurarLojasUsuario() {
+            const lojasContainer = document.getElementById('lojasFiltros');
+            lojasContainer.innerHTML = '';
+            const lojasDisponiveis = currentUser.role === 'gerente' ? currentUser.stores || [] : todasLojas;
+
+            lojasDisponiveis.forEach(loja => {
+                lojasContainer.innerHTML += `<a href="#" class="nav-link" data-loja="${loja}">${loja}</a>`;
+            });
+
+            document.querySelectorAll('#lojasFiltros .nav-link').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    link.classList.toggle('active');
+                    aplicarFiltro();
+                });
+            });
+
+            ['addLoja', 'editLoja'].forEach(id => {
+                const select = document.getElementById(id);
+                select.innerHTML = lojasDisponiveis.map(l => `<option value="${l}">${l}</option>`).join('');
+            });
+        }
+
+        function getDiaSemana(dateStr) {
+            const dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+            return dias[new Date(dateStr + 'T12:00:00').getDay()];
+        }
+
+        function aplicarMetasNaTabela() {
+            dados.forEach(registro => {
+                const mes = registro.data.slice(0, 7);
+                const meta = metasMes.find(m => m.mes === mes && (m.loja === registro.loja || m.loja === 'TODAS'));
+                if (meta) {
+                    registro.metaBruta = meta.metaBruta;
+                    registro.metaLiquida = meta.metaLiquida;
+                    registro.metaGerente = meta.metaGerente || 0;
+                    registro.metaDiretor = meta.metaDiretor || 0;
+                    registro.metaAnalista = meta.metaAnalista || 0;
+                } else {
+                    registro.metaBruta = registro.metaLiquida = registro.metaGerente = registro.metaDiretor = registro.metaAnalista = 0;
+                }
+                registro.diferencaBruta = registro.realizadoBruta - registro.metaBruta;
+                registro.diferencaLiquida = registro.realizadoLiquida - registro.metaLiquida;
+                registro.ticket = registro.realizadoBruta / registro.clientes || 0;
+            });
+            localStorage.setItem('dados', JSON.stringify(dados));
+        }
+
+        // FILTRO
+        function aplicarFiltro() {
+            const periodo = document.getElementById('filtroPeriodo').value;
+            const dataFiltro = document.getElementById('filtroData').value;
+            const lojasAtivas = Array.from(document.querySelectorAll('#lojasFiltros .nav-link.active')).map(l => l.dataset.loja);
+
+            let filtrados = dados.filter(row => {
+                // Filtro de loja
+                if (currentUser.role === 'gerente' && !currentUser.stores.includes(row.loja)) return false;
+                if (currentUser.role === 'analista' && row.addedBy !== currentUser.username) return false;
+                if (lojasAtivas.length > 0 && !lojasAtivas.includes(row.loja)) return false;
+
+                // Filtro de período
+                if (periodo === 'dia' && dataFiltro && row.data !== dataFiltro) return false;
+                if (periodo === 'mes' && dataFiltro && row.data.slice(0, 7) !== dataFiltro.slice(0, 7)) return false;
+
+                return true;
+            });
+
+            renderTabela(filtrados);
+            renderTelaMetas(filtrados);
+        }
+
+        function renderTabela(dadosFiltrados) {
+            let html = '<table class="table table-striped table-sm"><thead><tr><th>Loja</th><th>Data</th><th>Dia</th><th>Meta Bruta</th><th>Real. Bruta</th><th>Dif.</th><th>Meta Líq.</th><th>Real. Líq.</th><th>Dif.</th><th>Clientes</th><th>Ticket</th><th>Ações</th></tr></thead><tbody>';
+            dadosFiltrados.forEach(row => {
+                const classBruta = row.diferencaBruta < 0 ? 'below-meta' : 'above-meta';
+                const classLiquida = row.diferencaLiquida < 0 ? 'below-meta' : 'above-meta';
+                html += `<tr>
+                    <td>${row.loja}</td>
+                    <td>${row.data}</td>
+                    <td>${row.diaSemana}</td>
+                    <td>R$ ${row.metaBruta.toFixed(2)}</td>
+                    <td class="${classBruta}">R$ ${row.realizadoBruta.toFixed(2)}</td>
+                    <td>R$ ${row.diferencaBruta.toFixed(2)}</td>
+                    <td>R$ ${row.metaLiquida.toFixed(2)}</td>
+                    <td class="${classLiquida}">R$ ${row.realizadoLiquida.toFixed(2)}</td>
+                    <td>R$ ${row.diferencaLiquida.toFixed(2)}</td>
+                    <td>${row.clientes}</td>
+                    <td>R$ ${row.ticket.toFixed(2)}</td>
+                    <td class="action-btns">
+                        <button class="btn btn-warning btn-sm" onclick="editarRegistro(${row.id})" title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="excluirRegistro(${row.id})" title="Excluir">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('tabelaContainer').innerHTML = html;
+        }
+
+        function renderTelaMetas(dadosFiltrados) {
+            const tbody = document.getElementById('telaMetasBody');
+            tbody.innerHTML = '';
+            dadosFiltrados.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.data}</td>
+                    <td>${row.loja}</td>
+                    <td>R$ ${row.realizadoBruta.toFixed(2)}</td>
+                    <td>R$ ${row.metaBruta.toFixed(2)}</td>
+                    <td class="${row.realizadoBruta >= row.metaBruta ? 'meta-ok' : 'meta-no'}">${row.realizadoBruta >= row.metaBruta ? 'OK' : 'Não'}</td>
+                    <td>R$ ${row.realizadoLiquida.toFixed(2)}</td>
+                    <td>R$ ${row.metaLiquida.toFixed(2)}</td>
+                    <td class="${row.realizadoLiquida >= row.metaLiquida ? 'meta-ok' : 'meta-no'}">${row.realizadoLiquida >= row.metaLiquida ? 'OK' : 'Não'}</td>
+                    <td class="${row.realizadoBruta >= row.metaGerente ? 'meta-ok' : 'meta-no'}">R$ ${row.metaGerente.toFixed(2)}</td>
+                    <td class="${row.realizadoBruta >= row.metaDiretor ? 'meta-ok' : 'meta-no'}">R$ ${row.metaDiretor.toFixed(2)}</td>
+                    <td class="${row.realizadoBruta >= row.metaAnalista ? 'meta-ok' : 'meta-no'}">R$ ${row.metaAnalista.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
         // FUNÇÃO PARA ABRIR RELATÓRIO DE VENDAS
         function abrirRelatorioVendas() {
@@ -1068,222 +1298,6 @@
             aplicarFiltro();
         }
 
-        // Adicionar função para toggle da sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.querySelector('.overlay');
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        // Atualizar data atual
-        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR');
-
-        // Mostrar/ocultar botão toggle baseado no tamanho da tela
-        function checkScreenSize() {
-            const toggleBtn = document.querySelector('.toggle-btn');
-            if (window.innerWidth < 768) {
-                toggleBtn.style.display = 'block';
-            } else {
-                toggleBtn.style.display = 'none';
-                document.getElementById('sidebar').classList.remove('active');
-                document.querySelector('.overlay').classList.remove('active');
-            }
-        }
-
-        window.addEventListener('resize', checkScreenSize);
-        window.addEventListener('load', checkScreenSize);
-
-        // ATUALIZA CAMPO DE DATA
-        function atualizarCampoData() {
-            const periodo = document.getElementById('filtroPeriodo').value;
-            const dataDiv = document.getElementById('filtroDataDiv');
-            if (periodo === 'dia' || periodo === 'mes') {
-                dataDiv.style.display = 'block';
-                if (periodo === 'mes') {
-                    document.getElementById('filtroData').type = 'month';
-                } else {
-                    document.getElementById('filtroData').type = 'date';
-                }
-            } else {
-                dataDiv.style.display = 'none';
-            }
-        }
-
-        function logout() {
-            currentUser = null;
-            document.getElementById('app').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('loginForm').reset();
-            document.querySelectorAll('.modal').forEach(m => {
-                const modal = bootstrap.Modal.getInstance(m);
-                if (modal) modal.hide();
-            });
-        }
-
-        function mostrarLogin() {
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('app').style.display = 'none';
-        }
-
-        function entrarNoSistema() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-            document.getElementById('userInfo').innerHTML = `
-                Logado: ${currentUser.username} (${currentUser.role}) 
-                <button class="btn btn-sm btn-danger ms-2" onclick="logout()">Sair</button>
-            `;
-
-            const adminMenu = document.getElementById('adminMenu');
-            const linkTelaMetas = document.getElementById('linkTelaMetas');
-            if (['ceo', 'admin', 'diretor', 'gerente'].includes(currentUser.role)) {
-                adminMenu.style.display = 'block';
-                linkTelaMetas.style.display = currentUser.role === 'analista' ? 'none' : 'block';
-            } else {
-                adminMenu.style.display = 'none';
-            }
-
-            configurarLojasUsuario();
-            aplicarMetasNaTabela();
-            aplicarFiltro();
-            
-            // Fechar sidebar em mobile após login
-            if (window.innerWidth < 768) {
-                toggleSidebar();
-            }
-        }
-
-        function configurarLojasUsuario() {
-            const lojasContainer = document.getElementById('lojasFiltros');
-            lojasContainer.innerHTML = '';
-            const lojasDisponiveis = currentUser.role === 'gerente' ? currentUser.stores || [] : todasLojas;
-
-            lojasDisponiveis.forEach(loja => {
-                lojasContainer.innerHTML += `<a href="#" class="nav-link" data-loja="${loja}">${loja}</a>`;
-            });
-
-            document.querySelectorAll('#lojasFiltros .nav-link').forEach(link => {
-                link.addEventListener('click', e => {
-                    e.preventDefault();
-                    link.classList.toggle('active');
-                    aplicarFiltro();
-                });
-            });
-
-            ['addLoja', 'editLoja'].forEach(id => {
-                const select = document.getElementById(id);
-                select.innerHTML = lojasDisponiveis.map(l => `<option value="${l}">${l}</option>`).join('');
-            });
-        }
-
-        function getDiaSemana(dateStr) {
-            const dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
-            return dias[new Date(dateStr + 'T12:00:00').getDay()];
-        }
-
-        function preencherDiaSemana() {
-            const dias = ['segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado','domingo'];
-            ['addDiaSemana', 'editDiaSemana'].forEach(id => {
-                document.getElementById(id).innerHTML = dias.map(d => `<option value="${d}">${d}</option>`).join('');
-            });
-        }
-
-        function aplicarMetasNaTabela() {
-            dados.forEach(registro => {
-                const mes = registro.data.slice(0, 7);
-                const meta = metasMes.find(m => m.mes === mes && (m.loja === registro.loja || m.loja === 'TODAS'));
-                if (meta) {
-                    registro.metaBruta = meta.metaBruta;
-                    registro.metaLiquida = meta.metaLiquida;
-                    registro.metaGerente = meta.metaGerente || 0;
-                    registro.metaDiretor = meta.metaDiretor || 0;
-                    registro.metaAnalista = meta.metaAnalista || 0;
-                } else {
-                    registro.metaBruta = registro.metaLiquida = registro.metaGerente = registro.metaDiretor = registro.metaAnalista = 0;
-                }
-                registro.diferencaBruta = registro.realizadoBruta - registro.metaBruta;
-                registro.diferencaLiquida = registro.realizadoLiquida - registro.metaLiquida;
-                registro.ticket = registro.realizadoBruta / registro.clientes || 0;
-            });
-            localStorage.setItem('dados', JSON.stringify(dados));
-        }
-
-        // FILTRO CORRIGIDO
-        function aplicarFiltro() {
-            const periodo = document.getElementById('filtroPeriodo').value;
-            const dataFiltro = document.getElementById('filtroData').value;
-            const lojasAtivas = Array.from(document.querySelectorAll('#lojasFiltros .nav-link.active')).map(l => l.dataset.loja);
-
-            let filtrados = dados.filter(row => {
-                // Filtro de loja
-                if (currentUser.role === 'gerente' && !currentUser.stores.includes(row.loja)) return false;
-                if (currentUser.role === 'analista' && row.addedBy !== currentUser.username) return false;
-                if (lojasAtivas.length > 0 && !lojasAtivas.includes(row.loja)) return false;
-
-                // Filtro de período
-                if (periodo === 'dia' && dataFiltro && row.data !== dataFiltro) return false;
-                if (periodo === 'mes' && dataFiltro && row.data.slice(0, 7) !== dataFiltro.slice(0, 7)) return false;
-
-                return true;
-            });
-
-            renderTabela(filtrados);
-            renderTelaMetas(filtrados);
-        }
-
-        function renderTabela(dadosFiltrados) {
-            let html = '<table class="table table-striped table-sm"><thead><tr><th>Loja</th><th>Data</th><th>Dia</th><th>Meta Bruta</th><th>Real. Bruta</th><th>Dif.</th><th>Meta Líq.</th><th>Real. Líq.</th><th>Dif.</th><th>Clientes</th><th>Ticket</th><th>Ações</th></tr></thead><tbody>';
-            dadosFiltrados.forEach(row => {
-                const classBruta = row.diferencaBruta < 0 ? 'below-meta' : 'above-meta';
-                const classLiquida = row.diferencaLiquida < 0 ? 'below-meta' : 'above-meta';
-                html += `<tr>
-                    <td>${row.loja}</td>
-                    <td>${row.data}</td>
-                    <td>${row.diaSemana}</td>
-                    <td>R$ ${row.metaBruta.toFixed(2)}</td>
-                    <td class="${classBruta}">R$ ${row.realizadoBruta.toFixed(2)}</td>
-                    <td>R$ ${row.diferencaBruta.toFixed(2)}</td>
-                    <td>R$ ${row.metaLiquida.toFixed(2)}</td>
-                    <td class="${classLiquida}">R$ ${row.realizadoLiquida.toFixed(2)}</td>
-                    <td>R$ ${row.diferencaLiquida.toFixed(2)}</td>
-                    <td>${row.clientes}</td>
-                    <td>R$ ${row.ticket.toFixed(2)}</td>
-                    <td class="action-btns">
-                        <button class="btn btn-warning btn-sm" onclick="editarRegistro(${row.id})" title="Editar">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirRegistro(${row.id})" title="Excluir">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
-                </tr>`;
-            });
-            html += '</tbody></table>';
-            document.getElementById('tabelaContainer').innerHTML = html;
-        }
-
-        function renderTelaMetas(dadosFiltrados) {
-            const tbody = document.getElementById('telaMetasBody');
-            tbody.innerHTML = '';
-            dadosFiltrados.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${row.data}</td>
-                    <td>${row.loja}</td>
-                    <td>R$ ${row.realizadoBruta.toFixed(2)}</td>
-                    <td>R$ ${row.metaBruta.toFixed(2)}</td>
-                    <td class="${row.realizadoBruta >= row.metaBruta ? 'meta-ok' : 'meta-no'}">${row.realizadoBruta >= row.metaBruta ? 'OK' : 'Não'}</td>
-                    <td>R$ ${row.realizadoLiquida.toFixed(2)}</td>
-                    <td>R$ ${row.metaLiquida.toFixed(2)}</td>
-                    <td class="${row.realizadoLiquida >= row.metaLiquida ? 'meta-ok' : 'meta-no'}">${row.realizadoLiquida >= row.metaLiquida ? 'OK' : 'Não'}</td>
-                    <td class="${row.realizadoBruta >= row.metaGerente ? 'meta-ok' : 'meta-no'}">R$ ${row.metaGerente.toFixed(2)}</td>
-                    <td class="${row.realizadoBruta >= row.metaDiretor ? 'meta-ok' : 'meta-no'}">R$ ${row.metaDiretor.toFixed(2)}</td>
-                    <td class="${row.realizadoBruta >= row.metaAnalista ? 'meta-ok' : 'meta-no'}">R$ ${row.metaAnalista.toFixed(2)}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
         // CADASTRO DE USUÁRIO
         document.getElementById('userForm').addEventListener('submit', e => {
             e.preventDefault();
@@ -1376,18 +1390,6 @@
         };
 
         // Eventos
-        document.getElementById('loginForm').addEventListener('submit', e => {
-            e.preventDefault();
-            const user = users.find(u => u.username === document.getElementById('username').value && u.password === document.getElementById('password').value);
-            if (user) {
-                currentUser = { ...user };
-                if (user.role === 'gerente') currentUser.stores = user.stores || [];
-                entrarNoSistema();
-            } else {
-                alert('Usuário ou senha inválidos.');
-            }
-        });
-
         document.getElementById('addForm').addEventListener('submit', e => {
             e.preventDefault();
             const loja = document.getElementById('addLoja').value;
@@ -1448,10 +1450,14 @@
 
         document.getElementById('userListModal').addEventListener('shown.bs.modal', renderUserList);
 
-        // Inicialização
-        preencherDiaSemana();
-        mostrarLogin();
-        atualizarCampoData();
+        // INICIALIZAÇÃO
+        window.addEventListener('resize', checkScreenSize);
+        window.addEventListener('load', function() {
+            checkScreenSize();
+            preencherDiaSemana();
+            mostrarLogin();
+            atualizarCampoData();
+        });
     </script>
 </body>
 </html>
