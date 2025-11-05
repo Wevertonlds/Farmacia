@@ -466,7 +466,7 @@
                             <input type="number" step="0.01" class="form-control" id="metaAnalista">
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-custom">Gravar Metas</button>
+                            <button type="button" class="btn btn-custom" onclick="gravarMetas()">Gravar Metas</button>
                         </div>
                     </form>
                 </div>
@@ -663,13 +663,6 @@
                 adminMenu.style.display = 'none';
             }
 
-            // REMOVIDO: Não abrir modal de usuário automaticamente
-            // if (['ceo', 'admin'].includes(currentUser.role)) {
-            //     setTimeout(() => {
-            //         new bootstrap.Modal(document.getElementById('userModal')).show();
-            //     }, 300);
-            // }
-
             configurarLojasUsuario();
             aplicarMetasNaTabela();
             aplicarFiltro();
@@ -733,6 +726,65 @@
                 registro.ticket = registro.realizadoBruta / registro.clientes || 0;
             });
             localStorage.setItem('dados', JSON.stringify(dados));
+        }
+
+        // FUNÇÃO CORRIGIDA PARA GRAVAR METAS
+        function gravarMetas() {
+            // Verificar se usuário está logado
+            if (!currentUser) {
+                alert('Erro: Usuário não está logado!');
+                mostrarLogin();
+                return;
+            }
+
+            const metaMes = document.getElementById('metaMes').value;
+            const metaLoja = document.getElementById('metaLoja').value;
+            const metaBruta = parseFloat(document.getElementById('metaBruta').value);
+            const metaLiquida = parseFloat(document.getElementById('metaLiquida').value);
+            const metaGerente = parseFloat(document.getElementById('metaGerente').value) || 0;
+            const metaDiretor = parseFloat(document.getElementById('metaDiretor').value) || 0;
+            const metaAnalista = parseFloat(document.getElementById('metaAnalista').value) || 0;
+
+            // Validar campos obrigatórios
+            if (!metaMes || !metaLoja || isNaN(metaBruta) || isNaN(metaLiquida)) {
+                alert('Por favor, preencha todos os campos obrigatórios!');
+                return;
+            }
+
+            // Verificar se já existe meta para este mês/loja
+            const index = metasMes.findIndex(m => m.mes === metaMes && m.loja === metaLoja);
+            
+            const novaMeta = {
+                mes: metaMes,
+                loja: metaLoja,
+                metaBruta: metaBruta,
+                metaLiquida: metaLiquida,
+                metaGerente: metaGerente,
+                metaDiretor: metaDiretor,
+                metaAnalista: metaAnalista
+            };
+
+            if (index !== -1) {
+                // Atualizar meta existente
+                metasMes[index] = novaMeta;
+            } else {
+                // Adicionar nova meta
+                metasMes.push(novaMeta);
+            }
+
+            localStorage.setItem('metasMes', JSON.stringify(metasMes));
+            alert('Metas salvas com sucesso!');
+            
+            // Fechar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('metasModal'));
+            if (modal) modal.hide();
+            
+            // Limpar formulário
+            document.getElementById('metasForm').reset();
+            
+            // Atualizar tabela com novas metas
+            aplicarMetasNaTabela();
+            aplicarFiltro();
         }
 
         // FILTRO CORRIGIDO
@@ -810,57 +862,6 @@
                 tbody.appendChild(tr);
             });
         }
-
-        // FORMULÁRIO DE METAS - CORRIGIDO
-        document.getElementById('metasForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Verificar se usuário está logado
-            if (!currentUser) {
-                alert('Erro: Usuário não está logado!');
-                mostrarLogin();
-                return;
-            }
-
-            const metaMes = document.getElementById('metaMes').value;
-            const metaLoja = document.getElementById('metaLoja').value;
-            const metaBruta = parseFloat(document.getElementById('metaBruta').value);
-            const metaLiquida = parseFloat(document.getElementById('metaLiquida').value);
-            const metaGerente = parseFloat(document.getElementById('metaGerente').value) || 0;
-            const metaDiretor = parseFloat(document.getElementById('metaDiretor').value) || 0;
-            const metaAnalista = parseFloat(document.getElementById('metaAnalista').value) || 0;
-
-            // Verificar se já existe meta para este mês/loja
-            const index = metasMes.findIndex(m => m.mes === metaMes && m.loja === metaLoja);
-            
-            const novaMeta = {
-                mes: metaMes,
-                loja: metaLoja,
-                metaBruta: metaBruta,
-                metaLiquida: metaLiquida,
-                metaGerente: metaGerente,
-                metaDiretor: metaDiretor,
-                metaAnalista: metaAnalista
-            };
-
-            if (index !== -1) {
-                // Atualizar meta existente
-                metasMes[index] = novaMeta;
-            } else {
-                // Adicionar nova meta
-                metasMes.push(novaMeta);
-            }
-
-            localStorage.setItem('metasMes', JSON.stringify(metasMes));
-            alert('Metas salvas com sucesso!');
-            
-            // Fechar modal
-            bootstrap.Modal.getInstance(document.getElementById('metasModal')).hide();
-            
-            // Atualizar tabela com novas metas
-            aplicarMetasNaTabela();
-            aplicarFiltro();
-        });
 
         // CADASTRO DE USUÁRIO
         document.getElementById('userForm').addEventListener('submit', e => {
